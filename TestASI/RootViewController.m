@@ -12,7 +12,7 @@
 #import "SampleRequestManager.h"
 
 @interface RootViewController ()
-
+@property (nonatomic, strong)UIImageView *img;
 @end
 
 @implementation RootViewController
@@ -35,11 +35,21 @@
     progessView.frame = CGRectMake(0, 100, 100, 300);
     progessView.progress  = 0.1;
 
+    _img = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:_img];
+    
+    UIButton *but = [UIButton buttonWithType:UIButtonTypeContactAdd];
+    but.frame = CGRectMake(0, 100, 100, 50);
+    [but addTarget:self action:@selector(click) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:but];
+    
     [self.view addSubview:progessView];
     [[SampleRequestManager shareInsatance] eighthRequestForLogin];
     // Do any additional setup after loading the view.
 }
-
+- (void)click {
+    _img.image = [[UIImage alloc] initWithContentsOfFile:@"/var/mobile/Applications/38A9446E-C82D-474E-86F2-9C44CFF1A343/Library/asi.png"];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

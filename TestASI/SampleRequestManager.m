@@ -147,20 +147,23 @@
 //    [request setPassword:@"password"];
 //    [request startAsynchronous];
     
+
+}
+- (void)nightRequestForResumeDownloadFile{
     NSURL *url = [NSURL URLWithString:
                   @"http://www.dreamingwish.com/wp-content/uploads/2011/10/asihttprequest-auth.png"];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     
-    NSString *downloadPath = @"/Users/jianzhongliu/Library/Application Support/iPhone Simulator/7.1/Applications/87233508-A4E7-4529-86F8-8BB9D8A8C0A4/Library/asi.png";
+    NSString *downloadPath = @"/var/mobile/Applications/38A9446E-C82D-474E-86F2-9C44CFF1A343/Library/asi.png";
     
     //当request完成时，整个文件会被移动到这里
     [request setDownloadDestinationPath:downloadPath];
     
     //这个文件已经被下载了一部分
-    [request setTemporaryFileDownloadPath:@"/Users/jianzhongliu/Library/Application Support/iPhone Simulator/7.1/Applications/87233508-A4E7-4529-86F8-8BB9D8A8C0A4/Library/asi.png.download"];
+    [request setTemporaryFileDownloadPath:@"/var/mobile/Applications/38A9446E-C82D-474E-86F2-9C44CFF1A343/Library/asi.png.download"];
     [request setAllowResumeForFileDownloads:YES];//yes表示支持断点续传
     request.delegate = self;
-    [request startSynchronous];
+    [request startAsynchronous];
     
     //整个文件将会在这里
     NSString *theContent = [NSString stringWithContentsOfFile:downloadPath];

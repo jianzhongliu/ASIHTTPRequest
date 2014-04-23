@@ -20,5 +20,6 @@
 - (void)sixthRequestForDownloadFileSource;
 - (void)seventhRequestForDownloadIMGProgress:(UIProgressView *) myProgressIndicator;
 - (void)eighthRequestForLogin;
+- (void)nightRequestForResumeDownloadFile;
 
 @end

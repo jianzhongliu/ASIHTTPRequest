@@ -36,7 +36,7 @@
     progessView.progress  = 0.1;
 
     [self.view addSubview:progessView];
-    [[SampleRequestManager shareInsatance] seventhRequestForDownloadIMGProgress:progessView];
+    [[SampleRequestManager shareInsatance] eighthRequestForLogin];
     // Do any additional setup after loading the view.
 }
 

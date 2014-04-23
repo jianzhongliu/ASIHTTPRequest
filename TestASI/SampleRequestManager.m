@@ -136,12 +136,34 @@
     [request startSynchronous];
 }
 
-- (void)eighthRequestForLogin {
-    NSURL *url = [NSURL URLWithString:@"http://www.dreamingwish.com/"];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:@"username"];
-    [request setPassword:@"password"];
+- (void)eighthRequestForLogin {//?
+//    NSURL *url = [NSURL URLWithString:@"http://www.dreamingwish.com/"];
+//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//    [request setUseKeychainPersistence:YES];//把凭证放入keychain
+//    [request setUseSessionPersistence:YES]; //将凭证放入session这一项是默认的，所以并不必要
+//    [request setAuthenticationScheme:(NSString *)kCFHTTPAuthenticationSchemeBasic];
+//    [request setShouldPresentCredentialsBeforeChallenge:NO];
+//    [request setUsername:@"username"];
+//    [request setPassword:@"password"];
+//    [request startAsynchronous];
     
+    NSURL *url = [NSURL URLWithString:
+                  @"http://www.dreamingwish.com/wp-content/uploads/2011/10/asihttprequest-auth.png"];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    
+    NSString *downloadPath = @"/Users/jianzhongliu/Library/Application Support/iPhone Simulator/7.1/Applications/87233508-A4E7-4529-86F8-8BB9D8A8C0A4/Library/asi.png";
+    
+    //当request完成时，整个文件会被移动到这里
+    [request setDownloadDestinationPath:downloadPath];
+    
+    //这个文件已经被下载了一部分
+    [request setTemporaryFileDownloadPath:@"/Users/jianzhongliu/Library/Application Support/iPhone Simulator/7.1/Applications/87233508-A4E7-4529-86F8-8BB9D8A8C0A4/Library/asi.png.download"];
+    [request setAllowResumeForFileDownloads:YES];//yes表示支持断点续传
+    request.delegate = self;
+    [request startSynchronous];
+    
+    //整个文件将会在这里
+    NSString *theContent = [NSString stringWithContentsOfFile:downloadPath];
 }
 - (void)requestFinished:(ASIHTTPRequest *)request
 {

@@ -37,6 +37,8 @@
 		B7351D2818EA9C9C00338155 /* RequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B7351D2718EA9C9C00338155 /* RequestManager.m */; };
 		B765B8D919066D6800413AAB /* NSString+MD5Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B765B8D819066D6800413AAB /* NSString+MD5Addition.m */; };
 		B765B8DC19066E0800413AAB /* NSObject+NSJSONSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = B765B8DB19066E0800413AAB /* NSObject+NSJSONSerialization.m */; };
+		B765B8E819079DB600413AAB /* SampleRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B765B8E719079DB600413AAB /* SampleRequestManager.m */; };
+		B765B8EA1907AFF400413AAB /* README in Resources */ = {isa = PBXBuildFile; fileRef = B765B8E91907AFF400413AAB /* README */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +103,9 @@
 		B765B8D819066D6800413AAB /* NSString+MD5Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5Addition.m"; sourceTree = "<group>"; };
 		B765B8DA19066E0800413AAB /* NSObject+NSJSONSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+NSJSONSerialization.h"; sourceTree = "<group>"; };
 		B765B8DB19066E0800413AAB /* NSObject+NSJSONSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+NSJSONSerialization.m"; sourceTree = "<group>"; };
+		B765B8E619079DB600413AAB /* SampleRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleRequestManager.h; sourceTree = "<group>"; };
+		B765B8E719079DB600413AAB /* SampleRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleRequestManager.m; sourceTree = "<group>"; };
+		B765B8E91907AFF400413AAB /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +138,7 @@
 		B7351CB918EA8B0900338155 = {
 			isa = PBXGroup;
 			children = (
+				B765B8E91907AFF400413AAB /* README */,
 				B7351CCD18EA8B0900338155 /* TestASI */,
 				B7351CEA18EA8B0900338155 /* TestASITests */,
 				B7351CC418EA8B0900338155 /* Frameworks */,
@@ -263,6 +269,8 @@
 			children = (
 				B7351D2618EA9C9C00338155 /* RequestManager.h */,
 				B7351D2718EA9C9C00338155 /* RequestManager.m */,
+				B765B8E619079DB600413AAB /* SampleRequestManager.h */,
+				B765B8E719079DB600413AAB /* SampleRequestManager.m */,
 			);
 			name = NetworkRequest;
 			sourceTree = "<group>";
@@ -342,6 +350,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B765B8EA1907AFF400413AAB /* README in Resources */,
 				B7351CD218EA8B0900338155 /* InfoPlist.strings in Resources */,
 				B7351CDD18EA8B0900338155 /* Images.xcassets in Resources */,
 			);
@@ -363,6 +372,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7351D2818EA9C9C00338155 /* RequestManager.m in Sources */,
+				B765B8E819079DB600413AAB /* SampleRequestManager.m in Sources */,
 				B7351D1218EA8B1800338155 /* ASIDataCompressor.m in Sources */,
 				B7351CD818EA8B0900338155 /* AppDelegate.m in Sources */,
 				B7351D1618EA8B1800338155 /* ASIHTTPRequest.m in Sources */,

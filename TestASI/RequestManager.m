@@ -131,7 +131,10 @@ typedef NS_ENUM (NSInteger , TAG){
     return temp;
 }
 - (void)requestStarted:(ASIHTTPRequest *)request {
-
+    dispatch_async(dispatch_get_main_queue(),^{
+    
+    
+    });
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request {

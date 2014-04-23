@@ -9,6 +9,7 @@
 #import "RootViewController.h"
 #import "ReachabilityManager.h"
 #import "RequestManager.h"
+#import "SampleRequestManager.h"
 
 @interface RootViewController ()
 
@@ -28,8 +29,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[RequestManager shareReachability] firstRequest:nil];
+        NSLog(@"%@",NSHomeDirectory());
+//    [[RequestManager shareReachability] firstRequest:nil];
+    UIProgressView *progessView = [[UIProgressView alloc] init];
+    progessView.frame = CGRectMake(0, 100, 100, 300);
+    progessView.progress  = 0.1;
 
+    [self.view addSubview:progessView];
+    [[SampleRequestManager shareInsatance] seventhRequestForDownloadIMGProgress:progessView];
     // Do any additional setup after loading the view.
 }
 

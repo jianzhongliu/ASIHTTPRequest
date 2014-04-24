@@ -44,11 +44,11 @@
     [self.view addSubview:but];
     
     [self.view addSubview:progessView];
-    [[SampleRequestManager shareInsatance] eighthRequestForLogin];
+    [[SampleRequestManager shareInsatance] nightRequestForResumeDownloadFile];
     // Do any additional setup after loading the view.
 }
 - (void)click {
-    _img.image = [[UIImage alloc] initWithContentsOfFile:@"/var/mobile/Applications/38A9446E-C82D-474E-86F2-9C44CFF1A343/Library/asi.png"];
+    _img.image = [[UIImage alloc] initWithContentsOfFile:@"/Users/jianzhongliu/Library/Application Support/iPhone Simulator/7.1/Applications/DF075D6E-3FDB-4C5C-9C70-1DD8D4D3597A/Library/asi.png"];
 }
 - (void)didReceiveMemoryWarning
 {

@@ -146,28 +146,41 @@
 //    [request setUsername:@"username"];
 //    [request setPassword:@"password"];
 //    [request startAsynchronous];
-    
-
 }
-- (void)nightRequestForResumeDownloadFile{
+
+- (void)nightRequestForResumeDownloadFile{//断点续传成功
     NSURL *url = [NSURL URLWithString:
-                  @"http://www.dreamingwish.com/wp-content/uploads/2011/10/asihttprequest-auth.png"];
+                  @"http://www.aidatu.com/wp-content/uploads/2014/05/20131230155017907-500x590.jpg"];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    // 这将会对WWAN连接下的request进行流量控制（控制到预定义的值）
+    // Wi-Fi连接下的 request不会受影响
+    // 这个方法仅在iOS上可用
+    [ASIHTTPRequest setShouldThrottleBandwidthForWWAN:YES];
     
-    NSString *downloadPath = @"/var/mobile/Applications/38A9446E-C82D-474E-86F2-9C44CFF1A343/Library/asi.png";
+    // 这将会对WWAN连接下的request进行流量控制（控制到自定义的值）
+    // 这个方法仅在iOS上可用
+    [ASIHTTPRequest throttleBandwidthForWWANUsingLimit:10];
     
+    // 这将会控移动应用（mobile applications）的流量到预定义的值.
+    // 会限制所有requests, 不管request是不是WiFi连接下的 - <strong>使用时要注意</strong>
+    [ASIHTTPRequest setMaxBandwidthPerSecond:ASIWWANBandwidthThrottleAmount];
+    
+    // 记录每秒有多少字节的流量 (过去5秒内的平均值)
+    NSLog(@"---%lu",[ASIHTTPRequest averageBandwidthUsedPerSecond]);
+    
+    
+    NSString *downloadPath = @"/Users/jianzhongliu/Library/Application Support/iPhone Simulator/7.1/Applications/DF075D6E-3FDB-4C5C-9C70-1DD8D4D3597A/Library/asi.jpg";
     //当request完成时，整个文件会被移动到这里
     [request setDownloadDestinationPath:downloadPath];
-    
     //这个文件已经被下载了一部分
-    [request setTemporaryFileDownloadPath:@"/var/mobile/Applications/38A9446E-C82D-474E-86F2-9C44CFF1A343/Library/asi.png.download"];
+    [request setTemporaryFileDownloadPath:@"/Users/jianzhongliu/Library/Application Support/iPhone Simulator/7.1/Applications/DF075D6E-3FDB-4C5C-9C70-1DD8D4D3597A/Library/asi.jpg.download"];
     [request setAllowResumeForFileDownloads:YES];//yes表示支持断点续传
     request.delegate = self;
     [request startAsynchronous];
-    
     //整个文件将会在这里
     NSString *theContent = [NSString stringWithContentsOfFile:downloadPath];
 }
+
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
     // Use when fetching text data

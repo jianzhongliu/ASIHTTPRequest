@@ -9,6 +9,7 @@
 #import "SampleRequestManager.h"
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
+#import "ASINetworkQueue.h"
 
 @implementation SampleRequestManager
 +(instancetype)shareInsatance {
@@ -24,7 +25,7 @@
 }
 
 - (void)dealloc {
-//    [request clearDelegatesAndCancel];//request并不retain它们的代理，所以有可能你已经释放了代理，而之后request完成了，这将会引起崩溃。大多数情况下，如果你的代理即将被释放，你一定也希望取消所有request，因为你已经不再关心它们的返回情况了。如此做：
+//    [request clearDelegatesAndCancel];//request并不retain它们的代理，所以有可能你已经释放了代理，而之后request完成了，这将会引起崩溃。大多数情况下，如果你的代理即将被释放，你一定也希望取消所有request，因为你已经不再关心它们的返回情况了。如此做
 }
 - (void)firstRequestForSynchronous {
     NSURL *url = [NSURL URLWithString:@"http://www.dreamingwish.com"];
@@ -61,7 +62,7 @@
 }
 
 - (void)forthRequestForRequestQueue {
-    NSOperationQueue *myQueue = [[NSOperationQueue alloc] init];
+    ASINetworkQueue *myQueue = [[ASINetworkQueue alloc] init];
     myQueue.maxConcurrentOperationCount = 1;
     
     for (int i = 0; i<20; i ++) {
@@ -73,6 +74,8 @@
 //    [request setDidFailSelector:@selector(requestWentWrong:)];//注意：如果不这定selector，就会调用delegate的方法，
     [myQueue addOperation:request]; //queue is an NSOperationQueue
     }
+    [myQueue go];
+//    [myQueue cancelAllOperations];//取消所有的请求
     
     //当ASINetworkQueue中的一个request失败时，默认情况下，ASINetworkQueue会取消所有其他的request。要禁用这个特性，设置 [queue setShouldCancelAllRequestsOnFailure:NO]。
     //ASINetworkQueues只可以执行ASIHTTPRequest操作，二不可以用于通用操作。试图加入一个不是ASIHTTPRequest的NSOperation将会导致抛出错误。

@@ -44,7 +44,7 @@
     [self.view addSubview:but];
     
     [self.view addSubview:progessView];
-    [[SampleRequestManager shareInsatance] nightRequestForResumeDownloadFile];
+    [[SampleRequestManager shareInsatance] forthRequestForRequestQueue];
     // Do any additional setup after loading the view.
 }
 - (void)click {

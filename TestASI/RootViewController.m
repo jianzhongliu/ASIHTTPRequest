@@ -10,9 +10,12 @@
 #import "ReachabilityManager.h"
 #import "RequestManager.h"
 #import "SampleRequestManager.h"
+#import "IMGDowloaderManager.h"
 
 @interface RootViewController ()
 @property (nonatomic, strong)UIImageView *img;
+@property (nonatomic, strong)IMGDowloaderManager *downloader;
+@property (nonatomic, strong)NSString *identify;
 @end
 
 @implementation RootViewController
@@ -24,6 +27,27 @@
         // Custom initialization
     }
     return self;
+}
+
+- (IMGDowloaderManager *)downloader {
+    if (_downloader == nil) {
+        _downloader = [[IMGDowloaderManager alloc] init];
+    }
+    return _downloader;
+}
+
+- (NSString *)identify {
+//    static NSString *ident = nil;
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        if (ident == nil) {
+            CFUUIDRef uuidObj = CFUUIDCreate(kCFAllocatorDefault);
+            CFStringRef strRef = CFUUIDCreateString(kCFAllocatorDefault, uuidObj);
+            NSString *uuidString = [NSString stringWithString:(NSString*)CFBridgingRelease(strRef)];
+//            ident = uuidString;
+//        }
+//    });
+    return uuidString;
 }
 
 - (void)viewDidLoad
@@ -47,9 +71,19 @@
     [[SampleRequestManager shareInsatance] forthRequestForRequestQueue];
     // Do any additional setup after loading the view.
 }
+
 - (void)click {
-    _img.image = [[UIImage alloc] initWithContentsOfFile:@"/Users/jianzhongliu/Library/Application Support/iPhone Simulator/7.1/Applications/DF075D6E-3FDB-4C5C-9C70-1DD8D4D3597A/Library/asi.png"];
+    _img.image = nil;
+//    [self.downloader cancelAllRequest];
+    [self.downloader dowloadIMGWithImgURL:@"http://pic1.ajkimg.com/m/61a8745658b95a0f2c166f25d40fb70b/852x1136.jpg" identify:self.identify successBlock:^(BrokerResponder *response) {
+        if (response.statusCode == 2) {
+            _img.image = [[UIImage alloc] initWithContentsOfFile:response.imgPath];
+        }
+    } fialedBlock:^(BrokerResponder *response) {
+        
+    }];
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

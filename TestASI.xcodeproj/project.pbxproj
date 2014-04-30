@@ -39,6 +39,9 @@
 		B765B8DC19066E0800413AAB /* NSObject+NSJSONSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = B765B8DB19066E0800413AAB /* NSObject+NSJSONSerialization.m */; };
 		B765B8E819079DB600413AAB /* SampleRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B765B8E719079DB600413AAB /* SampleRequestManager.m */; };
 		B765B8EA1907AFF400413AAB /* README in Resources */ = {isa = PBXBuildFile; fileRef = B765B8E91907AFF400413AAB /* README */; };
+		B7E4E5081910954900077D77 /* BrokerResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E4E5031910954900077D77 /* BrokerResponder.m */; };
+		B7E4E5091910954900077D77 /* IMGDowloaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E4E5051910954900077D77 /* IMGDowloaderManager.m */; };
+		B7E4E50A1910954900077D77 /* IMGDownloaderOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E4E5071910954900077D77 /* IMGDownloaderOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +109,12 @@
 		B765B8E619079DB600413AAB /* SampleRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleRequestManager.h; sourceTree = "<group>"; };
 		B765B8E719079DB600413AAB /* SampleRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleRequestManager.m; sourceTree = "<group>"; };
 		B765B8E91907AFF400413AAB /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		B7E4E5021910954900077D77 /* BrokerResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrokerResponder.h; sourceTree = "<group>"; };
+		B7E4E5031910954900077D77 /* BrokerResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrokerResponder.m; sourceTree = "<group>"; };
+		B7E4E5041910954900077D77 /* IMGDowloaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGDowloaderManager.h; sourceTree = "<group>"; };
+		B7E4E5051910954900077D77 /* IMGDowloaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGDowloaderManager.m; sourceTree = "<group>"; };
+		B7E4E5061910954900077D77 /* IMGDownloaderOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGDownloaderOperation.h; sourceTree = "<group>"; };
+		B7E4E5071910954900077D77 /* IMGDownloaderOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGDownloaderOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +180,7 @@
 		B7351CCD18EA8B0900338155 /* TestASI */ = {
 			isa = PBXGroup;
 			children = (
+				B7E4E5011910952200077D77 /* IMGDownLoader */,
 				B7351D1D18EA8D9900338155 /* Controller */,
 				B7351CFA18EA8B1800338155 /* ASI */,
 				B7351CD618EA8B0900338155 /* AppDelegate.h */,
@@ -275,6 +285,19 @@
 			name = NetworkRequest;
 			sourceTree = "<group>";
 		};
+		B7E4E5011910952200077D77 /* IMGDownLoader */ = {
+			isa = PBXGroup;
+			children = (
+				B7E4E5021910954900077D77 /* BrokerResponder.h */,
+				B7E4E5031910954900077D77 /* BrokerResponder.m */,
+				B7E4E5041910954900077D77 /* IMGDowloaderManager.h */,
+				B7E4E5051910954900077D77 /* IMGDowloaderManager.m */,
+				B7E4E5061910954900077D77 /* IMGDownloaderOperation.h */,
+				B7E4E5071910954900077D77 /* IMGDownloaderOperation.m */,
+			);
+			name = IMGDownLoader;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -373,12 +396,14 @@
 			files = (
 				B7351D2818EA9C9C00338155 /* RequestManager.m in Sources */,
 				B765B8E819079DB600413AAB /* SampleRequestManager.m in Sources */,
+				B7E4E5081910954900077D77 /* BrokerResponder.m in Sources */,
 				B7351D1218EA8B1800338155 /* ASIDataCompressor.m in Sources */,
 				B7351CD818EA8B0900338155 /* AppDelegate.m in Sources */,
 				B7351D1618EA8B1800338155 /* ASIHTTPRequest.m in Sources */,
 				B7351D1118EA8B1800338155 /* ASIAuthenticationDialog.m in Sources */,
 				B7351D1518EA8B1800338155 /* ASIFormDataRequest.m in Sources */,
 				B765B8DC19066E0800413AAB /* NSObject+NSJSONSerialization.m in Sources */,
+				B7E4E5091910954900077D77 /* IMGDowloaderManager.m in Sources */,
 				B765B8D919066D6800413AAB /* NSString+MD5Addition.m in Sources */,
 				B7351CD418EA8B0900338155 /* main.m in Sources */,
 				B7351D2318EA904700338155 /* ReachabilityManager.m in Sources */,
@@ -386,6 +411,7 @@
 				B7351CDB18EA8B0900338155 /* TestASI.xcdatamodeld in Sources */,
 				B7351D1818EA8B1800338155 /* ASINetworkQueue.m in Sources */,
 				B7351D1318EA8B1800338155 /* ASIDataDecompressor.m in Sources */,
+				B7E4E50A1910954900077D77 /* IMGDownloaderOperation.m in Sources */,
 				B7351D2018EA8DB100338155 /* RootViewController.m in Sources */,
 				B7351D1918EA8B1800338155 /* Reachability.m in Sources */,
 				B7351D1418EA8B1800338155 /* ASIDownloadCache.m in Sources */,

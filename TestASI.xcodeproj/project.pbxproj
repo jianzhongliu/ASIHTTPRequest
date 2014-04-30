@@ -180,6 +180,9 @@
 		B7351CCD18EA8B0900338155 /* TestASI */ = {
 			isa = PBXGroup;
 			children = (
+				B7351D2518EA9C6900338155 /* NetworkRequest */,
+				B7351D2418EA9BDE00338155 /* CheckNetwork */,
+				B7E4E50C1910A00A00077D77 /* Category */,
 				B7E4E50B19109CA500077D77 /* BaseUtil */,
 				B7E4E5011910952200077D77 /* IMGDownLoader */,
 				B7351D1D18EA8D9900338155 /* Controller */,
@@ -254,12 +257,6 @@
 		B7351D1D18EA8D9900338155 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				B765B8DA19066E0800413AAB /* NSObject+NSJSONSerialization.h */,
-				B765B8DB19066E0800413AAB /* NSObject+NSJSONSerialization.m */,
-				B765B8D719066D6800413AAB /* NSString+MD5Addition.h */,
-				B765B8D819066D6800413AAB /* NSString+MD5Addition.m */,
-				B7351D2518EA9C6900338155 /* NetworkRequest */,
-				B7351D2418EA9BDE00338155 /* CheckNetwork */,
 				B7351D1E18EA8DB100338155 /* RootViewController.h */,
 				B7351D1F18EA8DB100338155 /* RootViewController.m */,
 			);
@@ -306,6 +303,17 @@
 			);
 			name = BaseUtil;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		B7E4E50C1910A00A00077D77 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				B765B8DA19066E0800413AAB /* NSObject+NSJSONSerialization.h */,
+				B765B8DB19066E0800413AAB /* NSObject+NSJSONSerialization.m */,
+				B765B8D719066D6800413AAB /* NSString+MD5Addition.h */,
+				B765B8D819066D6800413AAB /* NSString+MD5Addition.m */,
+			);
+			name = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

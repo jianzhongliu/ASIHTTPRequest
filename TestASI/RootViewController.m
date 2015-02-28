@@ -11,6 +11,7 @@
 #import "RequestManager.h"
 #import "SampleRequestManager.h"
 #import "IMGDowloaderManager.h"
+#import "AFNetworkingRootController.h"
 
 @interface RootViewController ()
 @property (nonatomic, strong)UIImageView *img;
@@ -57,7 +58,7 @@
 //    [[RequestManager shareReachability] firstRequest:nil];
     UIProgressView *progessView = [[UIProgressView alloc] init];
     progessView.frame = CGRectMake(0, 100, 100, 300);
-    progessView.progress  = 0.1;
+    progessView.progress  = 0.0;
 
     _img = [[UIImageView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:_img];
@@ -67,8 +68,13 @@
     [but addTarget:self action:@selector(click) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:but];
     
+    UIButton *AFNetworking = [UIButton buttonWithType:UIButtonTypeContactAdd];
+    AFNetworking.frame = CGRectMake(220, 100, 100, 50);
+    [AFNetworking addTarget:self action:@selector(AFNetworking) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:AFNetworking];
+    
     [self.view addSubview:progessView];
-    [[SampleRequestManager shareInsatance] forthRequestForRequestQueue];
+//    [[SampleRequestManager shareInsatance] forthRequestForRequestQueue];
     // Do any additional setup after loading the view.
 }
 
@@ -84,21 +90,12 @@
     }];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)AFNetworking {
+    AFNetworkingRootController *controller = [[AFNetworkingRootController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
+    [self presentViewController:nav animated:YES completion:^{
+        
+    }];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

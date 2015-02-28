@@ -23,6 +23,13 @@
 - (AFHTTPRequestOperationManager *)requestOperationManager {
     if (_requestOperationManager == nil) {
         _requestOperationManager = [[AFHTTPRequestOperationManager alloc] init];
+        [_requestOperationManager.requestSerializer setValue:@"image/png" forHTTPHeaderField:@"Content-type"];
+        [_requestOperationManager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
+//        [_requestOperationManager setRequestSerializer:[AFJSONRequestSerializer serializer]];
+        AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
+        securityPolicy.allowInvalidCertificates = NO;
+        [_requestOperationManager setSecurityPolicy:securityPolicy];
+        
     }
     return _requestOperationManager;
 }
@@ -84,7 +91,6 @@
         } else {
             [self.mapRequestList removeObjectForKey:requestID];
         }
-#warning TODO 这里的requestID可能有问题，比如当茫茫多的服务到这里的时候，block里面的requestID是否是copy了外面的requestID需要验证，但理论上这样没有问题
         TYURLResponse *response = [[TYURLResponse alloc] initWithResponseString:operation.responseString
                                                                             requestId:requestID
                                                                                 request:operation.request

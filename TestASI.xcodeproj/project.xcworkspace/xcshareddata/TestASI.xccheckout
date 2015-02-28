@@ -10,24 +10,36 @@
 	<string>TestASI</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>3B8FE4E0B14EBCE9E9F590BEE37A095793A972D1</key>
+		<string>https://github.com/jianzhongliu/ASIHTTPRequest.git</string>
 		<key>68B47EC4-DC46-49D4-A084-B3643F4448D4</key>
 		<string>https://github.com/jianzhongliu/ASIHTTPRequest.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>TestASI.xcodeproj/project.xcworkspace</string>
+	<string>TestASI.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>68B47EC4-DC46-49D4-A084-B3643F4448D4</key>
+		<key>3B8FE4E0B14EBCE9E9F590BEE37A095793A972D1</key>
 		<string>../..</string>
+		<key>68B47EC4-DC46-49D4-A084-B3643F4448D4</key>
+		<string>../../../TestASI</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/jianzhongliu/ASIHTTPRequest.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>68B47EC4-DC46-49D4-A084-B3643F4448D4</string>
+	<string>3B8FE4E0B14EBCE9E9F590BEE37A095793A972D1</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3B8FE4E0B14EBCE9E9F590BEE37A095793A972D1</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ASIHTTPRequest</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

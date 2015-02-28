@@ -11,6 +11,7 @@
 
 #import "NSDictionary+TYAFNetworking.h"
 #import "NSArray+TYAFNetworking.h"
+#import "NetworkingUtilsHeader.h"
 
 static NSTimeInterval kAIFNetworkingTimeoutSeconds = 20.0f;
 
@@ -20,5 +21,12 @@ typedef NS_ENUM(NSInteger, ResponseStatus){
     ResponseStatusErrorTimeout,//当没有收到成功或失败的反馈，当做超时处理
     ResponseStatusErrorFail//默认所有除了超时的网络错误都当做请求失败吃力
 };
+
+//获取验证码
+#define getPassCodeNew @"https://kyfw.12306.cn/otn/passcodeNew/getPassCodeNew.do?module=login&rand=sjrand&1425014789"
+//验证码预验
+#define checkRandCodeAnsyn @"https://kyfw.12306.cn/otn/passcodeNew/checkRandCodeAnsyn"
+//login
+#define loginAysnSuggest @"https://kyfw.12306.cn/otn/login/loginAysnSuggest"
 
 #endif

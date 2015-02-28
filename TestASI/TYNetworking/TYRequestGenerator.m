@@ -59,9 +59,9 @@
     NSString *paramString = [dicOrder TY_urlParamsStringSignature:NO];
     NSString *urlString = @"";
     if ([[serviceIdentifier componentsSeparatedByString:@"?"] count] > 1) {
-       urlString = [NSString stringWithFormat:@"%@%@&%@&sign=%@", serviceIdentifier, methodName, paramString, [TYSignatureGenerator signGETRestfulRequestWithSignParams:paramString]];
+       urlString = [NSString stringWithFormat:@"%@%@", serviceIdentifier, methodName];
     } else {
-       urlString = [NSString stringWithFormat:@"%@%@?%@&sign=%@", serviceIdentifier, methodName, paramString, [TYSignatureGenerator signGETRestfulRequestWithSignParams:paramString]];
+       urlString = [NSString stringWithFormat:@"%@%@?", serviceIdentifier, methodName];
     }
     
     NSLog(@"NEW reqeust URL:%@", urlString);

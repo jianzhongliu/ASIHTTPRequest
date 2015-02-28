@@ -59,7 +59,6 @@
  */
 - (void)getCheckCode {
     NSArray* cookieArr = [self getArrayFromCookie];
-    
     AFHTTPRequestOperationManager *manager1 = [AFHTTPRequestOperationManager manager];
     manager1.securityPolicy.allowInvalidCertificates = YES;
     manager1.requestSerializer = [AFJSONRequestSerializer serializer];

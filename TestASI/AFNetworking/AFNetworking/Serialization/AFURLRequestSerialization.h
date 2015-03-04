@@ -64,7 +64,7 @@ typedef NS_ENUM(NSUInteger, AFHTTPRequestQueryStringSerializationStyle) {
  Any request or response serializer dealing with HTTP is encouraged to subclass `AFHTTPRequestSerializer` in order to ensure consistent default behavior.
  */
 @interface AFHTTPRequestSerializer : NSObject <AFURLRequestSerialization>
-
+@property (readwrite, nonatomic, strong) NSMutableDictionary *mutableHTTPRequestHeaders;
 /**
  The string encoding used to serialize parameters. `NSUTF8StringEncoding` by default.
  */

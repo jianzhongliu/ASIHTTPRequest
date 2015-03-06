@@ -43,6 +43,7 @@
 		B7E4E5091910954900077D77 /* IMGDowloaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E4E5051910954900077D77 /* IMGDowloaderManager.m */; };
 		B7E4E50A1910954900077D77 /* IMGDownloaderOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E4E5071910954900077D77 /* IMGDownloaderOperation.m */; };
 		FC70AC3D1AA6C68F0013364B /* NSDictionary+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = FC70AC3C1AA6C68F0013364B /* NSDictionary+Ext.m */; };
+		FC70AC461AA836740013364B /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = FC70AC451AA836740013364B /* XMLDictionary.m */; };
 		FCBD5FFE1AA0480F0091FC2A /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBD5FD71AA0480F0091FC2A /* AFHTTPRequestOperation.m */; };
 		FCBD5FFF1AA0480F0091FC2A /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBD5FD91AA0480F0091FC2A /* AFHTTPRequestOperationManager.m */; };
 		FCBD60001AA0480F0091FC2A /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBD5FDB1AA0480F0091FC2A /* AFURLConnectionOperation.m */; };
@@ -146,6 +147,8 @@
 		B7E4E5071910954900077D77 /* IMGDownloaderOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGDownloaderOperation.m; sourceTree = "<group>"; };
 		FC70AC3B1AA6C68F0013364B /* NSDictionary+Ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Ext.h"; sourceTree = "<group>"; };
 		FC70AC3C1AA6C68F0013364B /* NSDictionary+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Ext.m"; sourceTree = "<group>"; };
+		FC70AC441AA836740013364B /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
+		FC70AC451AA836740013364B /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
 		FCBD5FD41AA0480F0091FC2A /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
 		FCBD5FD61AA0480F0091FC2A /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		FCBD5FD71AA0480F0091FC2A /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
@@ -536,6 +539,8 @@
 		FCBD60291AA1B9F50091FC2A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				FC70AC441AA836740013364B /* XMLDictionary.h */,
+				FC70AC451AA836740013364B /* XMLDictionary.m */,
 				FC70AC3B1AA6C68F0013364B /* NSDictionary+Ext.h */,
 				FC70AC3C1AA6C68F0013364B /* NSDictionary+Ext.m */,
 				FCBD60311AA1BDCC0091FC2A /* NSString+Ext.h */,
@@ -659,6 +664,7 @@
 				FCBD601F1AA048180091FC2A /* NSArray+TYAFNetworking.m in Sources */,
 				FCBD600D1AA0480F0091FC2A /* UIRefreshControl+AFNetworking.m in Sources */,
 				B7351D1218EA8B1800338155 /* ASIDataCompressor.m in Sources */,
+				FC70AC461AA836740013364B /* XMLDictionary.m in Sources */,
 				B7351CD818EA8B0900338155 /* AppDelegate.m in Sources */,
 				B7351D1618EA8B1800338155 /* ASIHTTPRequest.m in Sources */,
 				B7351D1118EA8B1800338155 /* ASIAuthenticationDialog.m in Sources */,

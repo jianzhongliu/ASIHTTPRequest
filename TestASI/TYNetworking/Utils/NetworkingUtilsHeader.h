@@ -12,5 +12,6 @@
 #import "NSData+Ext.h"
 #import "NSString+Ext.h"
 #import "NSDictionary+Ext.h"
+#import "XMLDictionary.h"
 
 #endif

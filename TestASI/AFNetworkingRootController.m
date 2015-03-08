@@ -52,28 +52,17 @@
     
     self.image = [[UIImageView alloc] initWithFrame:CGRectMake(10, 100, 80, 40)];
     [self.view addSubview:self.image];
+    
+    //开始登陆，获取cookie的空请求
     [self getconnect];
-//    //获取验证码
-//    [self getCheckCode];
-    
-///////////////////////////////////////////////////////////////查票,//////////////////////////////////////////////////////
-//    AFHTTPSessionManager * client = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:getPassCodeNew]];
-//    [[client securityPolicy] setAllowInvalidCertificates:YES];
-//    [client GET:@"https://kyfw.12306.cn/otn/passcodeNew/getPassCodeNew.do?module=login&rand=sjrand&1425090475" parameters:@"" success:^(NSURLSessionDataTask *task, id responseObject) {
-//        NSLog(@"getPassCodeNew.do===JSON: %@", responseObject);
-//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//        NSLog(@"getPassCodeNew.do===Error: %@", error);
-//        [self dismissModalViewControllerAnimated:YES];
-//    }];
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
+
 }
 /**
  注意：
  
  */
 - (void)getconnect {
-    NSArray* cookieArr = [self getArrayFromCookie];
+//    NSArray* cookieArr = [self getArrayFromCookie];
     self.manager1 = [AFHTTPRequestOperationManager manager];
     self.manager1.securityPolicy.allowInvalidCertificates = YES;
     //    self.manager1.requestSerializer = [AFJSONResponseSerializer serializer];
@@ -83,7 +72,7 @@
     self.manager1.responseSerializer = [AFCompoundResponseSerializer serializer];
     [self.manager1 GET:@"https://kyfw.12306.cn/otn/login/init" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //        [self getCheckCode];
-        NSLog(@"%@",responseObject);
+//        NSLog(@"%@",responseObject);
         NSXMLParser *xml = [[NSXMLParser alloc] initWithData:responseObject];
         XMLDictionaryParser *dicParser = [XMLDictionaryParser sharedInstance];
         NSDictionary *dic = [dicParser dictionaryWithParser:xml];
@@ -138,7 +127,7 @@
     NSDictionary *dicParam = @{@"channel":@"tieyou.ios", @"token":token, @"base64Code":base64String};
     
     [self.manager1 POST:@"http://m.ctrip.com/restapi/soa2/10103/json/GetCheckCodeFromCtrip" parameters:dicParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
+//        NSLog(@"JSON: %@", responseObject);
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
             NSDictionary *dic = (NSDictionary *)responseObject;
             NSString *code = [dic objectForKey:@"CheckCode"];
@@ -164,7 +153,7 @@
     [self.manager1.requestSerializer setValue:@"https://kyfw.12306.cn/otn/login/init" forHTTPHeaderField:@"Referer"];
 //    [self.manager1.requestSerializer.mutableHTTPRequestHeaders setValue:stringCookie forKey:@"Cookie"];
     [self.manager1 POST:@"https://kyfw.12306.cn/otn/passcodeNew/checkRandCodeAnsyn" parameters:dicParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"header:%@", [[operation response] allHeaderFields]);
+//        NSLog(@"header:%@", [[operation response] allHeaderFields]);
 //        NSLog(@"header:%@", [[operation request] allHeaderFields]);
         NSLog(@"result JSON: %@", responseObject);
         if ([[[responseObject objectForKey:@"data"] objectForKey:@"result"] integerValue] == 1) {
@@ -190,12 +179,6 @@
     [self.manager1.requestSerializer setValue:stringCookie forHTTPHeaderField:@"Cookie"];
     NSString *url = [NSString stringWithFormat:@"https://kyfw.12306.cn%@", self.randUrl];
     [self.manager1 GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"header:%@", operation.response.allHeaderFields);
-//        NSLog(@"JSON: %@", responseObject);
-//        NSXMLParser *xml = [[NSXMLParser alloc] initWithData:responseObject];
-//        XMLDictionaryParser *dicParser = [XMLDictionaryParser sharedInstance];
-//        NSDictionary *dic = [dicParser dictionaryWithParser:xml];
-//        NSLog(@"%@", dic);
         
         //从js重分离出key和value
         NSData *doubi = responseObject;
@@ -207,22 +190,38 @@
         NSArray *tempValueArray = [shabi componentsSeparatedByString:@"key='"];
         self.randValue = [[[tempValueArray objectAtIndex:1] componentsSeparatedByString:@"'"] objectAtIndex:0];
         
-        [self login2];
-        if ([responseObject isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *dic = (NSDictionary *)responseObject;
-            NSInteger status = [[dic objectForKey:@"status"] integerValue];
-            if (status == 1) {
-                NSLog(@"登录成功");
-            } else {
-                //                [self login];
-            }
-        }
+        [self getJSValueWithJSKey:self.randValue];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
 }
-//登录
-- (void)login2{
+
+//http://localhost:8080/StudyForStudent/REST/mysfuck/get12306ValueByKey/Nzc0NTg4÷
+//js加密算法得到value
+- (void)getJSValueWithJSKey:(NSString *) key {
+    NSString *urlString1 = [NSString stringWithFormat:@"http://localhost:8080/StudyForStudent/REST/mysfuck/get12306ValueByKey/%@",key];
+
+    NSURL *url = [NSURL URLWithString:urlString1];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSLog(@"operation hasAcceptableStatusCode: %ld", (long)[operation.response statusCode]);
+        NSLog(@"得到js的value: %@ ", operation.responseString);
+        NSString *value = operation.responseString;
+        if (value.length > 0 && value.length < 50) {
+            [self atLastLoginWithJSKeyValue:key value:value];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"error: %@", operation.responseString);
+        
+    }];
+    
+    [operation start];
+}
+//请求登陆成功与否状态
+- (void)atLastLoginWithJSKeyValue:(NSString *) key value:(NSString *)value{
     self.manager1 = [AFHTTPRequestOperationManager manager];
     self.manager1.securityPolicy.allowInvalidCertificates = YES;
     self.manager1.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -232,19 +231,43 @@
     NSArray* cookieArr = [self getArrayFromCookie];
     NSString *stringCookie = @"";
     stringCookie = [NSString stringWithFormat:@"JSESSIONID=%@; BIGipServerotn=%@; current_captcha_type=%@", [[cookieArr objectAtIndex:2] objectForKey:@"value"],[[cookieArr objectAtIndex:0] objectForKey:@"value"],[[cookieArr objectAtIndex:1] objectForKey:@"value"]];
+    NSString *requestParam = [NSString stringWithFormat:@"loginUserDTO.user_name=antingniu&userDTO.password=a123456&randCode=%@&randCode_validate=1&NDI0OTcz=%@&myversion=undefined",self.rangCode , [value urlEncodedString]];
+//
+//    NSMutableDictionary *dicParam = [NSMutableDictionary dictionary];
+//    [dicParam setValue:@"antingniu" forKey:@"loginUserDTO.user_name"];
+//    [dicParam setValue:@"a123456" forKey:@"userDTO.password"];
+//    [dicParam setValue:self.rangCode forKey:@"randCode"];
+//    [dicParam setValue:@"" forKey:@"randCode_validate"];
+//    [dicParam setValue:value forKey:key];
+//    [dicParam setValue:@"undefined" forKey:@"myversion"];
     
-    NSDictionary *dicParam = @{@"randCode":self.rangCode, @"userDTO.password":@"a123456", @"loginUserDTO.user_name":@"antingniu", @"ODE0Mjkx":@"NDMyNzk4M2IwYmY1NzkwMQ==", @"myversion":@"undefined"};
+    NSMutableArray *arrayParam = [NSMutableArray array];
+    
+    
+    
+    for (NSString *keyValue in [requestParam componentsSeparatedByString:@"&"]) {
+        NSArray *arrayOne = [keyValue componentsSeparatedByString:@"="];
+        NSMutableDictionary *dicKeyValue = [NSMutableDictionary dictionary];
+        [dicKeyValue setValue:[arrayOne objectAtIndex:0] forKey:@"key"];
+        [dicKeyValue setValue:[[arrayOne objectAtIndex:1] urlDecodedString] forKey:@"value"];
+        [arrayParam addObject:[dicKeyValue copy]];
+    }
+
+    NSLog(@"最终的登陆请求参数%@", arrayParam);
     [self.manager1.requestSerializer setValue:stringCookie forHTTPHeaderField:@"Cookie"];
-    [self.manager1.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//    [self.manager1.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [self.manager1.requestSerializer setValue:@"XMLHttpRequest" forHTTPHeaderField:@"X-Requested-With"];
     [self.manager1.requestSerializer setValue:@"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36" forHTTPHeaderField:@"User-Agent"];
     [self.manager1.requestSerializer setValue:@"https://kyfw.12306.cn/otn/login/init" forHTTPHeaderField:@"Referer"];
-    [self.manager1.requestSerializer setValue:@"*/*" forHTTPHeaderField:@"Accept"];
-    [self.manager1.requestSerializer setValue:@"gzip, deflate" forHTTPHeaderField:@"Accept-Encoding"];
-    [self.manager1.requestSerializer setValue:@"https://kyfw.12306.cn" forHTTPHeaderField:@"Origin"];
-    [self.manager1 POST:@"https://kyfw.12306.cn/otn/login/loginAysnSuggest" parameters:dicParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"header:%@", operation.response.allHeaderFields);
-        NSLog(@"JSON: %@", responseObject);
+//    [self.manager1.requestSerializer setValue:@"*/*" forHTTPHeaderField:@"Accept"];
+//    [self.manager1.requestSerializer setValue:@"gzip, deflate" forHTTPHeaderField:@"Accept-Encoding"];
+//    [self.manager1.requestSerializer setValue:@"https://kyfw.12306.cn" forHTTPHeaderField:@"Origin"];
+//    [self.manager1.requestSerializer setValue:@"" forKey:@""];
+//    [self.manager1.requestSerializer setValuesForKeysWithDictionary:dicParam];
+    [self.manager1 GET:@"https://kyfw.12306.cn/otn/login/loginAysnSuggest" parameters:arrayParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSLog(@"header:%@", operation.response.allHeaderFields);
+        NSDictionary *dic = (NSDictionary *)responseObject;
+        NSLog(@"最终登陆反回结果: %@", [(NSArray *)[dic objectForKey:@"messages"] objectAtIndex:0]);
 
 //        https://kyfw.12306.cn/otn/dynamicJs/lwluywt
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
@@ -261,50 +284,6 @@
     }];
 }
 
-//登录
-- (void)login{
-    self.manager1 = [AFHTTPRequestOperationManager manager];
-    self.manager1.securityPolicy.allowInvalidCertificates = YES;
-    self.manager1.requestSerializer = [AFJSONRequestSerializer serializer];
-    self.manager1.responseSerializer = [AFCompoundResponseSerializer serializer];
-    self.manager1.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    //    [self.manager1.responseSerializer addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]]
-    NSArray* cookieArr = [self getArrayFromCookie];
-    NSString *stringCookie = @"";
-    stringCookie = [NSString stringWithFormat:@"JSESSIONID=%@; BIGipServerotn=%@; current_captcha_type=%@", [[cookieArr objectAtIndex:2] objectForKey:@"value"],[[cookieArr objectAtIndex:0] objectForKey:@"value"],[[cookieArr objectAtIndex:1] objectForKey:@"value"]];
-    
-    NSDictionary *dicParam = @{@"randCode":self.rangCode, @"userDTO.password":@"a123456", @"loginUserDTO.user_name":@"antingniu"};
-    [self.manager1.requestSerializer setValue:stringCookie forHTTPHeaderField:@"Cookie"];
-    [self.manager1.requestSerializer setValue:@"text/html;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [self.manager1.requestSerializer setValue:@"XMLHttpRequest" forHTTPHeaderField:@"X-Requested-With"];
-    [self.manager1.requestSerializer setValue:@"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36" forHTTPHeaderField:@"User-Agent"];
-    [self.manager1.requestSerializer setValue:@"https://kyfw.12306.cn/otn/login/init" forHTTPHeaderField:@"Referer"];
-    [self.manager1.requestSerializer setValue:@"*/*" forHTTPHeaderField:@"Accept"];
-    [self.manager1.requestSerializer setValue:@"gzip, deflate" forHTTPHeaderField:@"Accept-Encoding"];
-    [self.manager1.requestSerializer setValue:@"https://kyfw.12306.cn" forHTTPHeaderField:@"Origin"];
-    [self.manager1 POST:@"https://kyfw.12306.cn/otn/login/userLogin" parameters:dicParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"header:%@", operation.response.allHeaderFields);
-        NSLog(@"JSON: %@", responseObject);
-        NSXMLParser *xml = [[NSXMLParser alloc] initWithData:responseObject];
-        XMLDictionaryParser *dicParser = [XMLDictionaryParser sharedInstance];
-        NSDictionary *dic = [dicParser dictionaryWithParser:xml];
-        if (dic) {
-            [self login0];
-        }
-        NSLog(@"%@", dic);
-        if ([responseObject isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *dic = (NSDictionary *)responseObject;
-            NSInteger status = [[dic objectForKey:@"status"] integerValue];
-            if (status == 1) {
-                NSLog(@"登录成功");
-            } else {
-                //                [self login];
-            }
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
-}
 /**
  把base64的图片数据转化成UIImage
  params:

@@ -224,22 +224,22 @@
 - (void)atLastLoginWithJSKeyValue:(NSString *) key value:(NSString *)value{
     self.manager1 = [AFHTTPRequestOperationManager manager];
     self.manager1.securityPolicy.allowInvalidCertificates = YES;
-    self.manager1.requestSerializer = [AFJSONRequestSerializer serializer];
+//    self.manager1.requestSerializer = [AFJSONRequestSerializer serializer];
     self.manager1.responseSerializer = [AFJSONResponseSerializer serializer];
 //    self.manager1.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     //    [self.manager1.responseSerializer addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]]
     NSArray* cookieArr = [self getArrayFromCookie];
     NSString *stringCookie = @"";
     stringCookie = [NSString stringWithFormat:@"JSESSIONID=%@; BIGipServerotn=%@; current_captcha_type=%@", [[cookieArr objectAtIndex:2] objectForKey:@"value"],[[cookieArr objectAtIndex:0] objectForKey:@"value"],[[cookieArr objectAtIndex:1] objectForKey:@"value"]];
-    NSString *requestParam = [NSString stringWithFormat:@"loginUserDTO.user_name=antingniu&userDTO.password=a123456&randCode=%@&randCode_validate=1&NDI0OTcz=%@&myversion=undefined",self.rangCode , [value urlEncodedString]];
-//
-//    NSMutableDictionary *dicParam = [NSMutableDictionary dictionary];
-//    [dicParam setValue:@"antingniu" forKey:@"loginUserDTO.user_name"];
-//    [dicParam setValue:@"a123456" forKey:@"userDTO.password"];
-//    [dicParam setValue:self.rangCode forKey:@"randCode"];
-//    [dicParam setValue:@"" forKey:@"randCode_validate"];
-//    [dicParam setValue:value forKey:key];
-//    [dicParam setValue:@"undefined" forKey:@"myversion"];
+    NSString *requestParam = [NSString stringWithFormat:@"loginUserDTO.user_name=antingniu&userDTO.password=a123456&randCode=%@&randCode_validate=&%@=%@&myversion=undefined",self.rangCode , [key urlEncodedString], [value urlEncodedString]];
+
+    NSMutableDictionary *dicParam = [NSMutableDictionary dictionary];
+    [dicParam setValue:@"antingniu" forKey:@"loginUserDTO.user_name"];
+    [dicParam setValue:@"a123456" forKey:@"userDTO.password"];
+    [dicParam setValue:self.rangCode forKey:@"randCode"];
+    [dicParam setValue:@"" forKey:@"randCode_validate"];
+    [dicParam setValue:value forKey:key];
+    [dicParam setValue:@"undefined" forKey:@"myversion"];
     
     NSMutableArray *arrayParam = [NSMutableArray array];
     
@@ -253,7 +253,7 @@
         [arrayParam addObject:[dicKeyValue copy]];
     }
 
-    NSLog(@"最终的登陆请求参数%@", arrayParam);
+    NSLog(@"最终的登陆请求参数%@", requestParam);
     [self.manager1.requestSerializer setValue:stringCookie forHTTPHeaderField:@"Cookie"];
 //    [self.manager1.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [self.manager1.requestSerializer setValue:@"XMLHttpRequest" forHTTPHeaderField:@"X-Requested-With"];
@@ -264,10 +264,10 @@
 //    [self.manager1.requestSerializer setValue:@"https://kyfw.12306.cn" forHTTPHeaderField:@"Origin"];
 //    [self.manager1.requestSerializer setValue:@"" forKey:@""];
 //    [self.manager1.requestSerializer setValuesForKeysWithDictionary:dicParam];
-    [self.manager1 GET:@"https://kyfw.12306.cn/otn/login/loginAysnSuggest" parameters:arrayParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.manager1 POST:@"https://kyfw.12306.cn/otn/login/loginAysnSuggest" parameters:dicParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        NSLog(@"header:%@", operation.response.allHeaderFields);
         NSDictionary *dic = (NSDictionary *)responseObject;
-        NSLog(@"最终登陆反回结果: %@", [(NSArray *)[dic objectForKey:@"messages"] objectAtIndex:0]);
+        NSLog(@"最终登陆反回结果: %@", dic);
 
 //        https://kyfw.12306.cn/otn/dynamicJs/lwluywt
         if ([responseObject isKindOfClass:[NSDictionary class]]) {

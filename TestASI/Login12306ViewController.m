@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 anjuke. All rights reserved.
 //
 
-#import "AFNetworkingRootController.h"
+#import "Login12306ViewController.h"
 #import "TYAPIProxy.h"
 #import "UIImageView+AFNetworking.h"
 #import "TYRequestGenerator.h"
 
-@interface AFNetworkingRootController ()<NSXMLParserDelegate>
+@interface Login12306ViewController ()<NSXMLParserDelegate>
 
 @property (nonatomic, strong) UIImageView *image;
 @property (nonatomic, copy) NSString *rangCode;
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation AFNetworkingRootController
+@implementation Login12306ViewController
 //生成一张毛玻璃图片
 - (UIImage*)blur:(UIImage*)theImage
 {
@@ -38,9 +38,11 @@
     CGImageRelease(cgImage);
     return returnImage;
 }
+
 - (void)goBackToRoot {
     [self dismissModalViewControllerAnimated:YES];
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -53,15 +55,29 @@
     self.image = [[UIImageView alloc] initWithFrame:CGRectMake(10, 100, 80, 40)];
     [self.view addSubview:self.image];
     
-    //开始登陆，获取cookie的空请求
-    [self getconnect];
+    [self loginOut];
 
 }
 /**
- 注意：
- 
+ 退出登陆
  */
-- (void)getconnect {
+- (void)loginOut {
+//https://kyfw.12306.cn/otn/login/loginOut
+    self.manager1 = [AFHTTPRequestOperationManager manager];
+    self.manager1.securityPolicy.allowInvalidCertificates = YES;
+    self.manager1.responseSerializer = [AFCompoundResponseSerializer serializer];
+    [self.manager1 GET:@"https://kyfw.12306.cn/otn/login/loginOut" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSLog(@"成功后返回的用户信息：%@", operation.responseString);
+        [self connectToServer];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+/**
+ 模拟进入登陆页面
+ */
+- (void)connectToServer {
 //    NSArray* cookieArr = [self getArrayFromCookie];
     self.manager1 = [AFHTTPRequestOperationManager manager];
     self.manager1.securityPolicy.allowInvalidCertificates = YES;
@@ -116,18 +132,17 @@
 
 //自动打码
 - (void)autoCodeWithBase64String:(NSString *) base64String {
-    self.manager1 = [AFHTTPRequestOperationManager manager];
-    self.manager1.securityPolicy.allowInvalidCertificates = YES;
-    self.manager1.requestSerializer = [AFJSONRequestSerializer serializer];
-    self.manager1.responseSerializer = [AFJSONResponseSerializer serializer];
+    AFHTTPRequestOperationManager *manager2 = [AFHTTPRequestOperationManager manager];
+    manager2.securityPolicy.allowInvalidCertificates = YES;
+    manager2.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager2.responseSerializer = [AFJSONResponseSerializer serializer];
     
     //    [manager1.requestSerializer setValue:@"image/jpeg;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
     //    [manager1.requestSerializer setValue:@"https://kyfw.12306.cn/otn/login/init" forHTTPHeaderField:@"Referer"];
     NSString *token = [[[@"@K0aY5,e" stringByAppendingString:base64String] MD5String] uppercaseString];
     NSDictionary *dicParam = @{@"channel":@"tieyou.ios", @"token":token, @"base64Code":base64String};
-    
-    [self.manager1 POST:@"http://m.ctrip.com/restapi/soa2/10103/json/GetCheckCodeFromCtrip" parameters:dicParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"JSON: %@", responseObject);
+        [manager2 POST:@"http://m.ctrip.com/restapi/soa2/10103/json/GetCheckCodeFromCtrip" parameters:dicParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
             NSDictionary *dic = (NSDictionary *)responseObject;
             NSString *code = [dic objectForKey:@"CheckCode"];
@@ -148,10 +163,10 @@
     NSArray* cookieArr = [self getArrayFromCookie];
     NSString *stringCookie = @"";
     stringCookie = [NSString stringWithFormat:@"JSESSIONID=%@; BIGipServerotn=%@; current_captcha_type=%@", [[cookieArr objectAtIndex:2] objectForKey:@"value"],[[cookieArr objectAtIndex:0] objectForKey:@"value"],[[cookieArr objectAtIndex:1] objectForKey:@"value"]];
-    NSDictionary *dicParam = @{@"rand":@"sjrand", @"randCode":code, @"randCode_validate":@""};
+    NSDictionary
+*dicParam = @{@"rand":@"sjrand", @"randCode":code, @"randCode_validate":@""};
     [self.manager1.requestSerializer setValue:stringCookie forHTTPHeaderField:@"Cookie"];
     [self.manager1.requestSerializer setValue:@"https://kyfw.12306.cn/otn/login/init" forHTTPHeaderField:@"Referer"];
-//    [self.manager1.requestSerializer.mutableHTTPRequestHeaders setValue:stringCookie forKey:@"Cookie"];
     [self.manager1 POST:@"https://kyfw.12306.cn/otn/passcodeNew/checkRandCodeAnsyn" parameters:dicParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        NSLog(@"header:%@", [[operation response] allHeaderFields]);
 //        NSLog(@"header:%@", [[operation request] allHeaderFields]);
@@ -268,17 +283,35 @@
 //        NSLog(@"header:%@", operation.response.allHeaderFields);
         NSDictionary *dic = (NSDictionary *)responseObject;
         NSLog(@"最终登陆反回结果: %@", dic);
-
+        
 //        https://kyfw.12306.cn/otn/dynamicJs/lwluywt
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
             NSDictionary *dic = (NSDictionary *)responseObject;
             NSInteger status = [[dic objectForKey:@"status"] integerValue];
             if (status == 1) {
                 NSLog(@"登录成功");
+                [self queryUserInfo];
+                
             } else {
+                [self connectToServer];
                 //                [self login];
             }
         }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+- (void)queryUserInfo{
+    self.manager1 = [AFHTTPRequestOperationManager manager];
+    self.manager1.securityPolicy.allowInvalidCertificates = YES;
+    self.manager1.responseSerializer = [AFCompoundResponseSerializer serializer];
+    [self.manager1 GET:@"https://kyfw.12306.cn/otn/modifyUser/initQueryUserInfo" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self goBackToRoot];//登陆成功后返回
+//        NSXMLParser *xml = [[NSXMLParser alloc] initWithData:responseObject];
+        
+//        XMLDictionaryParser *dicParser = [XMLDictionaryParser sharedInstance];
+//        NSDictionary *dic = [dicParser dictionaryWithParser:xml];
+//        NSLog(@"成功后返回的用户信息：%@", operation.responseString);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];

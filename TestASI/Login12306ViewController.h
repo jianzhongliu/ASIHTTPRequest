@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AFNetworkingRootController : UIViewController
+@interface Login12306ViewController : UIViewController
 
 @end

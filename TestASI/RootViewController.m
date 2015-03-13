@@ -11,7 +11,8 @@
 #import "RequestManager.h"
 #import "SampleRequestManager.h"
 #import "IMGDowloaderManager.h"
-#import "AFNetworkingRootController.h"
+#import "Login12306ViewController.h"
+#import "QueryTicketViewController.h"
 
 @interface RootViewController ()
 @property (nonatomic, strong)UIImageView *img;
@@ -73,6 +74,12 @@
     [AFNetworking addTarget:self action:@selector(AFNetworking) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:AFNetworking];
     
+    UIButton *queryTicketList = [UIButton buttonWithType:UIButtonTypeContactAdd];
+    queryTicketList.frame = CGRectMake(220, 200, 100, 50);
+    [queryTicketList setTitle:@"查询" forState:UIControlStateNormal];
+    [queryTicketList addTarget:self action:@selector(queryTicketList) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:queryTicketList];
+    
     [self.view addSubview:progessView];
 //    [[SampleRequestManager shareInsatance] forthRequestForRequestQueue];
     // Do any additional setup after loading the view.
@@ -91,11 +98,19 @@
 }
 
 - (void)AFNetworking {
-    AFNetworkingRootController *controller = [[AFNetworkingRootController alloc] init];
+    Login12306ViewController *controller = [[Login12306ViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
     [self presentViewController:nav animated:YES completion:^{
         
     }];
 }
+//QueryTicketViewController
 
+- (void)queryTicketList {
+    QueryTicketViewController *controller = [[QueryTicketViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
+    [self presentViewController:nav animated:YES completion:^{
+        
+    }];
+}
 @end

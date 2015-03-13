@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24D826711AB2D48400121316 /* QueryTicketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D826701AB2D48400121316 /* QueryTicketViewController.m */; };
 		B7351CC618EA8B0900338155 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7351CC518EA8B0900338155 /* Foundation.framework */; };
 		B7351CC818EA8B0900338155 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7351CC718EA8B0900338155 /* CoreGraphics.framework */; };
 		B7351CCA18EA8B0900338155 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7351CC918EA8B0900338155 /* UIKit.framework */; };
@@ -68,7 +69,7 @@
 		FCBD60231AA048180091FC2A /* TYRequestGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBD601A1AA048180091FC2A /* TYRequestGenerator.m */; };
 		FCBD60241AA048180091FC2A /* TYSignatureGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBD601C1AA048180091FC2A /* TYSignatureGenerator.m */; };
 		FCBD60251AA048180091FC2A /* TYURLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBD601E1AA048180091FC2A /* TYURLResponse.m */; };
-		FCBD60281AA049980091FC2A /* AFNetworkingRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBD60271AA049980091FC2A /* AFNetworkingRootController.m */; };
+		FCBD60281AA049980091FC2A /* Login12306ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBD60271AA049980091FC2A /* Login12306ViewController.m */; };
 		FCBD602E1AA1B9FE0091FC2A /* NSData+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBD602B1AA1B9FE0091FC2A /* NSData+Ext.m */; };
 		FCBD602F1AA1B9FE0091FC2A /* Security.c in Sources */ = {isa = PBXBuildFile; fileRef = FCBD602C1AA1B9FE0091FC2A /* Security.c */; };
 		FCBD60331AA1BDCC0091FC2A /* NSString+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBD60321AA1BDCC0091FC2A /* NSString+Ext.m */; };
@@ -85,6 +86,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		24D8266F1AB2D48400121316 /* QueryTicketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryTicketViewController.h; sourceTree = "<group>"; };
+		24D826701AB2D48400121316 /* QueryTicketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryTicketViewController.m; sourceTree = "<group>"; };
 		B7351CC218EA8B0900338155 /* TestASI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestASI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7351CC518EA8B0900338155 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B7351CC718EA8B0900338155 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -200,8 +203,8 @@
 		FCBD601C1AA048180091FC2A /* TYSignatureGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYSignatureGenerator.m; sourceTree = "<group>"; };
 		FCBD601D1AA048180091FC2A /* TYURLResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYURLResponse.h; sourceTree = "<group>"; };
 		FCBD601E1AA048180091FC2A /* TYURLResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYURLResponse.m; sourceTree = "<group>"; };
-		FCBD60261AA049980091FC2A /* AFNetworkingRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkingRootController.h; sourceTree = "<group>"; };
-		FCBD60271AA049980091FC2A /* AFNetworkingRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkingRootController.m; sourceTree = "<group>"; };
+		FCBD60261AA049980091FC2A /* Login12306ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Login12306ViewController.h; sourceTree = "<group>"; };
+		FCBD60271AA049980091FC2A /* Login12306ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Login12306ViewController.m; sourceTree = "<group>"; };
 		FCBD602A1AA1B9FE0091FC2A /* NSData+Ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Ext.h"; sourceTree = "<group>"; };
 		FCBD602B1AA1B9FE0091FC2A /* NSData+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Ext.m"; sourceTree = "<group>"; };
 		FCBD602C1AA1B9FE0091FC2A /* Security.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Security.c; sourceTree = "<group>"; };
@@ -355,8 +358,10 @@
 			children = (
 				B7351D1E18EA8DB100338155 /* RootViewController.h */,
 				B7351D1F18EA8DB100338155 /* RootViewController.m */,
-				FCBD60261AA049980091FC2A /* AFNetworkingRootController.h */,
-				FCBD60271AA049980091FC2A /* AFNetworkingRootController.m */,
+				FCBD60261AA049980091FC2A /* Login12306ViewController.h */,
+				FCBD60271AA049980091FC2A /* Login12306ViewController.m */,
+				24D8266F1AB2D48400121316 /* QueryTicketViewController.h */,
+				24D826701AB2D48400121316 /* QueryTicketViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -688,7 +693,8 @@
 				FCBD60001AA0480F0091FC2A /* AFURLConnectionOperation.m in Sources */,
 				FCBD60031AA0480F0091FC2A /* AFNetworkReachabilityManager.m in Sources */,
 				FCBD600B1AA0480F0091FC2A /* UIImageView+AFNetworking.m in Sources */,
-				FCBD60281AA049980091FC2A /* AFNetworkingRootController.m in Sources */,
+				FCBD60281AA049980091FC2A /* Login12306ViewController.m in Sources */,
+				24D826711AB2D48400121316 /* QueryTicketViewController.m in Sources */,
 				B7351CDB18EA8B0900338155 /* TestASI.xcdatamodeld in Sources */,
 				B7351D1818EA8B1800338155 /* ASINetworkQueue.m in Sources */,
 				B7351D1318EA8B1800338155 /* ASIDataDecompressor.m in Sources */,

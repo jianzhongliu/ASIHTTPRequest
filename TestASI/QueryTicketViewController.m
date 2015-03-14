@@ -23,10 +23,10 @@
 
 }
 
-- (void)queryTicketInfo {
-//https://kyfw.12306.cn/otn/lcxxcx/query?purpose_codes=ADULT&queryDate=2015-03-14&from_station=SHH&to_station=BJP
 
-    
+
+
+- (void)queryTicketInfo {
     self.manager1 = [AFHTTPRequestOperationManager manager];
     self.manager1.securityPolicy.allowInvalidCertificates = YES;
     self.manager1.responseSerializer = [AFCompoundResponseSerializer serializer];
@@ -61,12 +61,11 @@
 
 //检查是否有未完成订单
 - (void)checkHasNoComplitedOrder {
-    //https://kyfw.12306.cn/otn/lcxxcx/query?purpose_codes=ADULT&queryDate=2015-03-14&from_station=SHH&to_station=BJP
     self.manager1 = [AFHTTPRequestOperationManager manager];
     self.manager1.securityPolicy.allowInvalidCertificates = YES;
     self.manager1.responseSerializer = [AFJSONResponseSerializer serializer];
     NSString *url = @"https://kyfw.12306.cn/otn/queryOrder/queryMyOrderNoComplete";
-    NSDictionary *dic = @{@"key":@"_json_att", @"value":@""};
+    NSDictionary *dic = @{@"_json_att":@""};
     [self.manager1 POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"成功后返回的用户信息：%@", operation.responseString);
         if ([[responseObject objectForKey:@"status"] integerValue] >= 1) {//没有未完成订单

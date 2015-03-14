@@ -55,7 +55,7 @@
     self.image = [[UIImageView alloc] initWithFrame:CGRectMake(10, 100, 80, 40)];
     [self.view addSubview:self.image];
     
-    [self loginOut];
+    [self connectToServer];
 
 }
 /**
@@ -123,8 +123,10 @@
 
         NSData *data = [NSData dataWithData:responseObject];
         NSString *dataString = [data base64EncodedString];//用这个string去请求ctrip的自动打码服务
-        [self autoCodeWithBase64String:dataString];
-        self.image.image = [self base64StringToImage:dataString];
+        if (dataString.length > 0) {
+            [self autoCodeWithBase64String:dataString];
+            self.image.image = [self base64StringToImage:dataString];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
@@ -147,7 +149,14 @@
             NSDictionary *dic = (NSDictionary *)responseObject;
             NSString *code = [dic objectForKey:@"CheckCode"];
             self.rangCode = code;
-            [self checkCodeValidateWithCode:code];
+            if (code.length > 0) {
+                [self checkCodeValidateWithCode:code];
+            } else {
+                [self connectToServer];
+            }
+            
+        } else {
+            [self connectToServer];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -165,7 +174,7 @@
     stringCookie = [NSString stringWithFormat:@"JSESSIONID=%@; BIGipServerotn=%@; current_captcha_type=%@", [[cookieArr objectAtIndex:2] objectForKey:@"value"],[[cookieArr objectAtIndex:0] objectForKey:@"value"],[[cookieArr objectAtIndex:1] objectForKey:@"value"]];
     NSDictionary
 *dicParam = @{@"rand":@"sjrand", @"randCode":code, @"randCode_validate":@""};
-    [self.manager1.requestSerializer setValue:stringCookie forHTTPHeaderField:@"Cookie"];
+//    [self.manager1.requestSerializer setValue:stringCookie forHTTPHeaderField:@"Cookie"];
     [self.manager1.requestSerializer setValue:@"https://kyfw.12306.cn/otn/login/init" forHTTPHeaderField:@"Referer"];
     [self.manager1 POST:@"https://kyfw.12306.cn/otn/passcodeNew/checkRandCodeAnsyn" parameters:dicParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        NSLog(@"header:%@", [[operation response] allHeaderFields]);
@@ -173,6 +182,8 @@
         NSLog(@"result JSON: %@", responseObject);
         if ([[[responseObject objectForKey:@"data"] objectForKey:@"result"] integerValue] == 1) {
             [self login0];
+        } else if(code.length > 0){
+            [self connectToServer];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -191,7 +202,7 @@
     NSString *stringCookie = @"";
     stringCookie = [NSString stringWithFormat:@"JSESSIONID=%@; BIGipServerotn=%@; current_captcha_type=%@", [[cookieArr objectAtIndex:2] objectForKey:@"value"],[[cookieArr objectAtIndex:0] objectForKey:@"value"],[[cookieArr objectAtIndex:1] objectForKey:@"value"]];
     
-    [self.manager1.requestSerializer setValue:stringCookie forHTTPHeaderField:@"Cookie"];
+//    [self.manager1.requestSerializer setValue:stringCookie forHTTPHeaderField:@"Cookie"];
     NSString *url = [NSString stringWithFormat:@"https://kyfw.12306.cn%@", self.randUrl];
     [self.manager1 GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -199,13 +210,18 @@
         NSData *doubi = responseObject;
         NSString *shabi =  [[NSString alloc] initWithData:doubi encoding:NSUTF8StringEncoding];
 #warning TODO 得到登录时的随机参数
-        NSArray *tempKeyArray = [shabi componentsSeparatedByString:@"key='"];
-        self.randKey = [[[tempKeyArray objectAtIndex:1] componentsSeparatedByString:@"'"] objectAtIndex:0];
-        
-        NSArray *tempValueArray = [shabi componentsSeparatedByString:@"key='"];
-        self.randValue = [[[tempValueArray objectAtIndex:1] componentsSeparatedByString:@"'"] objectAtIndex:0];
-        
-        [self getJSValueWithJSKey:self.randValue];
+        if (shabi.length > 0) {
+            NSArray *tempKeyArray = [shabi componentsSeparatedByString:@"key='"];
+            self.randKey = [[[tempKeyArray objectAtIndex:1] componentsSeparatedByString:@"'"] objectAtIndex:0];
+            
+            NSArray *tempValueArray = [shabi componentsSeparatedByString:@"key='"];
+            self.randValue = [[[tempValueArray objectAtIndex:1] componentsSeparatedByString:@"'"] objectAtIndex:0];
+            
+            [self getJSValueWithJSKey:self.randValue];
+        } else {
+            [self connectToServer];
+        }
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
@@ -269,7 +285,7 @@
     }
 
     NSLog(@"最终的登陆请求参数%@", requestParam);
-    [self.manager1.requestSerializer setValue:stringCookie forHTTPHeaderField:@"Cookie"];
+//    [self.manager1.requestSerializer setValue:stringCookie forHTTPHeaderField:@"Cookie"];
 //    [self.manager1.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [self.manager1.requestSerializer setValue:@"XMLHttpRequest" forHTTPHeaderField:@"X-Requested-With"];
     [self.manager1.requestSerializer setValue:@"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36" forHTTPHeaderField:@"User-Agent"];

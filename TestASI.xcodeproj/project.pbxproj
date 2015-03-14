@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2422DFA41AB41971007A50D4 /* RobTicketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2422DFA31AB41971007A50D4 /* RobTicketViewController.m */; };
+		2422DFA81AB47A06007A50D4 /* TicketObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2422DFA71AB47A06007A50D4 /* TicketObject.m */; };
 		24D826711AB2D48400121316 /* QueryTicketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D826701AB2D48400121316 /* QueryTicketViewController.m */; };
 		B7351CC618EA8B0900338155 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7351CC518EA8B0900338155 /* Foundation.framework */; };
 		B7351CC818EA8B0900338155 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7351CC718EA8B0900338155 /* CoreGraphics.framework */; };
@@ -89,6 +90,8 @@
 /* Begin PBXFileReference section */
 		2422DFA21AB41971007A50D4 /* RobTicketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RobTicketViewController.h; sourceTree = "<group>"; };
 		2422DFA31AB41971007A50D4 /* RobTicketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RobTicketViewController.m; sourceTree = "<group>"; };
+		2422DFA61AB47A06007A50D4 /* TicketObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TicketObject.h; sourceTree = "<group>"; };
+		2422DFA71AB47A06007A50D4 /* TicketObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TicketObject.m; sourceTree = "<group>"; };
 		24D8266F1AB2D48400121316 /* QueryTicketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryTicketViewController.h; sourceTree = "<group>"; };
 		24D826701AB2D48400121316 /* QueryTicketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryTicketViewController.m; sourceTree = "<group>"; };
 		B7351CC218EA8B0900338155 /* TestASI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestASI.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -244,6 +247,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2422DFA51AB479E9007A50D4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2422DFA61AB47A06007A50D4 /* TicketObject.h */,
+				2422DFA71AB47A06007A50D4 /* TicketObject.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		B7351CB918EA8B0900338155 = {
 			isa = PBXGroup;
 			children = (
@@ -280,6 +292,7 @@
 		B7351CCD18EA8B0900338155 /* TestASI */ = {
 			isa = PBXGroup;
 			children = (
+				2422DFA51AB479E9007A50D4 /* Model */,
 				FCBD600F1AA048180091FC2A /* TYNetworking */,
 				FCBD5FD21AA0480F0091FC2A /* AFNetworking */,
 				B7351D2518EA9C6900338155 /* NetworkRequest */,
@@ -676,6 +689,7 @@
 				B7351D1218EA8B1800338155 /* ASIDataCompressor.m in Sources */,
 				FC70AC461AA836740013364B /* XMLDictionary.m in Sources */,
 				B7351CD818EA8B0900338155 /* AppDelegate.m in Sources */,
+				2422DFA81AB47A06007A50D4 /* TicketObject.m in Sources */,
 				B7351D1618EA8B1800338155 /* ASIHTTPRequest.m in Sources */,
 				B7351D1118EA8B1800338155 /* ASIAuthenticationDialog.m in Sources */,
 				B7351D1518EA8B1800338155 /* ASIFormDataRequest.m in Sources */,

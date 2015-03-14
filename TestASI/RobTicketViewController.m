@@ -12,6 +12,9 @@
 
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager1;
 
+@property (nonatomic, copy) NSString *randKey;
+@property (nonatomic, copy) NSString *randValue;
+
 @end
 
 @implementation RobTicketViewController
@@ -31,8 +34,24 @@
     return mutarr;
 }
 
+- (void)goBackToRoot {
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)dealloc {
+    self.manager1 = nil;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    [[UINavigationBar appearance] setBackgroundImage:menuBarImage forBarMetrics:UIBarMetricsDefault];
+    
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    backButton.frame = CGRectMake(0, 0, 40, 30);
+    [backButton setTitle:@"back" forState:UIControlStateNormal];
+    [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(goBackToRoot) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self checkUserInfo];
 
 }
@@ -43,7 +62,12 @@
     NSString *url = @"https://kyfw.12306.cn/otn/login/checkUser";
     NSDictionary *dicParam = @{@"_json_att":@""};
     [self.manager1 POST:url parameters:dicParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self checkHasNoComplitedOrder];
+        if ([[[responseObject objectForKey:@"data"] objectForKey:@"flag"] integerValue] >= 1) {
+            [self checkHasNoComplitedOrder];
+        } else {
+            [self checkUserInfo];
+            NSLog(@"not login");
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
@@ -72,14 +96,14 @@
     self.manager1 = [AFHTTPRequestOperationManager manager];
     self.manager1.securityPolicy.allowInvalidCertificates = YES;
     self.manager1.responseSerializer = [AFCompoundResponseSerializer serializer];
-    NSString *url = @"https://kyfw.12306.cn/otn/lcxxcx/query?purpose_codes=ADULT&queryDate=2015-03-14&from_station=SHH&to_station=BJP";
+    NSString *url = @"https://kyfw.12306.cn/otn/lcxxcx/query?purpose_codes=ADULT&queryDate=2015-03-17&from_station=SHH&to_station=BJP";
     [self.manager1 GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //        [self goBackToRoot];//登陆成功后返回
         //        NSXMLParser *xml = [[NSXMLParser alloc] initWithData:responseObject];
         
         //        XMLDictionaryParser *dicParser = [XMLDictionaryParser sharedInstance];
         //        NSDictionary *dic = [dicParser dictionaryWithParser:xml];
-        NSLog(@"成功后返回的用户信息：%@", operation.responseString);
+        NSLog(@"成功后返回的票信息：%@", operation.responseString);
         [self queryLeftTicket];
         //开始登陆，获取cookie的空请求
         //        [self connectToServer];
@@ -98,7 +122,11 @@
     self.manager1.responseSerializer = [AFCompoundResponseSerializer serializer];
     NSString *url = @"https://kyfw.12306.cn/otn/leftTicket/init";
     [self.manager1 GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self dynamicJs:@"tempJs"];//可能是从checkuser那里拿，或者从登陆那里拿到
+        if (operation.responseString.length > 0) {
+            NSArray *arrayOne = [operation.responseString componentsSeparatedByString:@"otn/dynamicJs/"];
+            NSArray *arrayTwo = [[arrayOne objectAtIndex:1] componentsSeparatedByString:@"\""];
+            [self dynamicJs:[arrayTwo objectAtIndex:0]];//可能是从checkuser那里拿，或者从登陆那里拿到
+        }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -117,11 +145,44 @@
     [self.manager1 GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self leftTicketLog];
         NSLog(@"成功后返回的用户信息：%@", operation.responseString);
-        //        [self login0WithRandJS:@"ddd"];
-        
+
+        if (operation.responseString.length > 0) {
+            NSArray *tempKeyArray = [operation.responseString componentsSeparatedByString:@"key='"];
+            self.randKey = [[[tempKeyArray objectAtIndex:1] componentsSeparatedByString:@"'"] objectAtIndex:0];
+            
+            [self getJSValueWithJSKey:self.randKey];
+        } else {
+            [self checkUserInfo];
+        }
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
+}
+//js加密算法得到value
+- (void)getJSValueWithJSKey:(NSString *) key {
+    NSString *urlString1 = [NSString stringWithFormat:@"http://localhost:8080/StudyForStudent/REST/mysfuck/get12306ValueByKey/%@",key];
+    
+    NSURL *url = [NSURL URLWithString:urlString1];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //        NSLog(@"operation hasAcceptableStatusCode: %ld", (long)[operation.response statusCode]);
+        NSLog(@"得到js的value: %@ ", operation.responseString);
+        NSString *value = operation.responseString;
+        if (value.length > 0 && value.length < 50) {
+            self.randValue = value;
+            [self leftTicketLog];
+//            [self atLastLoginWithJSKeyValue:key value:value];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"error: %@", operation.responseString);
+        
+    }];
+    
+    [operation start];
 }
 /*
  xx
@@ -135,7 +196,7 @@
     [self.manager1 GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        [self inputOrder];
         NSLog(@"成功后返回的用户信息：%@", operation.responseString);
-        //        [self login0WithRandJS:@"ddd"];
+        [self checkLeftTicket];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -149,7 +210,7 @@
     self.manager1 = [AFHTTPRequestOperationManager manager];
     self.manager1.securityPolicy.allowInvalidCertificates = YES;
     self.manager1.responseSerializer = [AFCompoundResponseSerializer serializer];
-    NSString *url = @"https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.train_date=2015-03-15&leftTicketDTO.from_station=SHH&leftTicketDTO.to_station=BJP&purpose_codes=ADULT";
+    NSString *url = @"https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.train_date=2015-03-17&leftTicketDTO.from_station=SHH&leftTicketDTO.to_station=BJP&purpose_codes=ADULT";
     [self.manager1 GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [self submitOrderRequest];
         //        [self login0WithRandJS:@"ddd"];
@@ -158,13 +219,27 @@
         NSLog(@"Error: %@", error);
     }];
 }
-
+/**
+ 判断用户是否可以访问预定确认画面
+ */
 - (void)submitOrderRequest {
     self.manager1 = [AFHTTPRequestOperationManager manager];
     self.manager1.securityPolicy.allowInvalidCertificates = YES;
     self.manager1.responseSerializer = [AFJSONResponseSerializer serializer];
     NSString *url = @"https://kyfw.12306.cn/otn/leftTicket/submitOrderRequest";
-    NSDictionary *dic = @{@"__request__params__":@""};
+    NSMutableDictionary *dicParam = [NSMutableDictionary dictionary];
+    [dicParam setValue:self.randValue forKey:self.randValue];
+    [dicParam setValue:@"undefined" forKey:@"myversion"];
+    [dicParam setValue:@"" forKey:@"randCode_validate"];
+    [dicParam setValue:@"2015-03-17" forKey:@"train_date"];
+    [dicParam setValue:@"2015-03-17" forKey:@"back_train_date"];
+
+    [dicParam setValue:@"ADULT" forKey:@"purpose_codes"];
+    [dicParam setValue:@"dc" forKey:@"tour_flag"];//dc单程，fc返程
+    [dicParam setValue:@"上海虹桥" forKey:@"query_from_station_name"];
+    [dicParam setValue:@"北京南" forKey:@"query_to_station_name"];
+    [dicParam setValue:@"MjAxNS0wMy0xNSMwMCNHNCMwNDo0OCMxNDowMCM1bDAwMDAwMEc0MzAjQU9II1ZOUCMxODo0OCPkuIrmtbfombnmoaUj5YyX5Lqs5Y2XIzAxIzAzI08wNTUzMDAwMDBNMDkzMzAwMDAxOTE3NDgwMDAwNCNIMSMxNDI2MzE4NjgxNjEzIzI5RTc4RUJGMkM5RERENEI0NTE4NzFFRTM5Qzg1NUVFNTlFQTE5QkJEODQwMUEwQzM3REFCMzY2" forKey:@"secretStr"];//下单令牌
+    [dicParam setValue:@"" forKey:@"undefined"];
     //参数：    "__request__params__" = "MjgyOTQ3=YTdkNzYxMTNkMjc0YzY5OQ%3D%3D&myversion=undefined&train_date=2015-03-15&back_train_date=2015-03-15&purpose_codes=ADULT&tour_flag=dc&query_from_station_name=%E4%B8%8A%E6%B5%B7%E8%99%B9%E6%A1%A5&query_to_station_name=%E5%8C%97%E4%BA%AC%E5%8D%97&secretStr=MjAxNS0wMy0xNSMwMCNHNCMwNDo0OCMxNDowMCM1bDAwMDAwMEc0MzAjQU9II1ZOUCMxODo0OCPkuIrmtbfombnmoaUj5YyX5Lqs5Y2XIzAxIzAzI08wNTUzMDAwMDBNMDkzMzAwMDAxOTE3NDgwMDAwNCNIMSMxNDI2MzE4NjgxNjEzIzI5RTc4RUJGMkM5RERENEI0NTE4NzFFRTM5Qzg1NUVFNTlFQTE5QkJEODQwMUEwQzM3REFCMzY2&undefined=";
 /*    <__NSArrayM 0x15dbd440>(
     {
@@ -208,7 +283,7 @@
         value = "";
     }
 */
-    [self.manager1 POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.manager1 POST:url parameters:dicParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"成功后返回的用户信息：%@", operation.responseString);
         if ([[responseObject objectForKey:@"status"] integerValue] >= 1) {//没有未完成订单
             [self initDc];
@@ -217,6 +292,9 @@
         NSLog(@"Error: %@", error);
     }];
 }
+/**
+ 预定确认页面
+ */
 - (void)initDc {
     self.manager1 = [AFHTTPRequestOperationManager manager];
     self.manager1.securityPolicy.allowInvalidCertificates = YES;
@@ -412,4 +490,6 @@
 //{
 //    "_json_att" = "";
 //}
+
+
 @end

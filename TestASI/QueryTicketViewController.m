@@ -23,9 +23,6 @@
 
 }
 
-
-
-
 - (void)queryTicketInfo {
     self.manager1 = [AFHTTPRequestOperationManager manager];
     self.manager1.securityPolicy.allowInvalidCertificates = YES;

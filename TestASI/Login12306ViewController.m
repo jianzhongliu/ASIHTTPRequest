@@ -126,6 +126,8 @@
         if (dataString.length > 0) {
             [self autoCodeWithBase64String:dataString];
             self.image.image = [self base64StringToImage:dataString];
+        } else {
+            [self loginOut];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -251,6 +253,7 @@
     
     [operation start];
 }
+
 //请求登陆成功与否状态
 - (void)atLastLoginWithJSKeyValue:(NSString *) key value:(NSString *)value{
     self.manager1 = [AFHTTPRequestOperationManager manager];

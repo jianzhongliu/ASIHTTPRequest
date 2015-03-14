@@ -13,6 +13,7 @@
 #import "IMGDowloaderManager.h"
 #import "Login12306ViewController.h"
 #import "QueryTicketViewController.h"
+#import "RobTicketViewController.h"
 
 @interface RootViewController ()
 @property (nonatomic, strong)UIImageView *img;
@@ -80,6 +81,12 @@
     [queryTicketList addTarget:self action:@selector(queryTicketList) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:queryTicketList];
     
+    UIButton *robTicket = [UIButton buttonWithType:UIButtonTypeContactAdd];
+    robTicket.frame = CGRectMake(20, 200, 100, 50);
+    [robTicket setTitle:@"抢票" forState:UIControlStateNormal];
+    [robTicket addTarget:self action:@selector(robTicket) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:robTicket];
+    
     [self.view addSubview:progessView];
 //    [[SampleRequestManager shareInsatance] forthRequestForRequestQueue];
     // Do any additional setup after loading the view.
@@ -113,4 +120,13 @@
         
     }];
 }
+
+- (void)robTicket {
+    RobTicketViewController *controller = [[RobTicketViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
+    [self presentViewController:nav animated:YES completion:^{
+        
+    }];
+}
+
 @end

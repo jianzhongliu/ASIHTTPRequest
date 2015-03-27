@@ -54,4 +54,6 @@
 @property (nonatomic, copy) NSString *zy_num ;
 @property (nonatomic, copy) NSString *swz_num ;
 
+@property (nonatomic, copy) NSString *secretStr;
+
 @end

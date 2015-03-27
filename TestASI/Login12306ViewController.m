@@ -265,7 +265,7 @@
     NSArray* cookieArr = [self getArrayFromCookie];
     NSString *stringCookie = @"";
     stringCookie = [NSString stringWithFormat:@"JSESSIONID=%@; BIGipServerotn=%@; current_captcha_type=%@", [[cookieArr objectAtIndex:2] objectForKey:@"value"],[[cookieArr objectAtIndex:0] objectForKey:@"value"],[[cookieArr objectAtIndex:1] objectForKey:@"value"]];
-    NSString *requestParam = [NSString stringWithFormat:@"loginUserDTO.user_name=antingniu&userDTO.password=a123456&randCode=%@&randCode_validate=&%@=%@&myversion=undefined",self.rangCode , [key urlEncodedString], [value urlEncodedString]];
+//    NSString *requestParam = [NSString stringWithFormat:@"loginUserDTO.user_name=antingniu&userDTO.password=a123456&randCode=%@&randCode_validate=&%@=%@&myversion=undefined",self.rangCode , [key urlEncodedString], [value urlEncodedString]];
 
     NSMutableDictionary *dicParam = [NSMutableDictionary dictionary];
     [dicParam setValue:@"antingniu" forKey:@"loginUserDTO.user_name"];
@@ -274,22 +274,8 @@
     [dicParam setValue:@"" forKey:@"randCode_validate"];
     [dicParam setValue:value forKey:key];
     [dicParam setValue:@"undefined" forKey:@"myversion"];
-    
-    NSMutableArray *arrayParam = [NSMutableArray array];
-    
-    
-    
-    for (NSString *keyValue in [requestParam componentsSeparatedByString:@"&"]) {
-        NSArray *arrayOne = [keyValue componentsSeparatedByString:@"="];
-        NSMutableDictionary *dicKeyValue = [NSMutableDictionary dictionary];
-        [dicKeyValue setValue:[arrayOne objectAtIndex:0] forKey:@"key"];
-        [dicKeyValue setValue:[[arrayOne objectAtIndex:1] urlDecodedString] forKey:@"value"];
-        [arrayParam addObject:[dicKeyValue copy]];
-    }
 
-    NSLog(@"最终的登陆请求参数%@", requestParam);
-//    [self.manager1.requestSerializer setValue:stringCookie forHTTPHeaderField:@"Cookie"];
-//    [self.manager1.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//    NSLog(@"最终的登陆请求参数%@", requestParam);
     [self.manager1.requestSerializer setValue:@"XMLHttpRequest" forHTTPHeaderField:@"X-Requested-With"];
     [self.manager1.requestSerializer setValue:@"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36" forHTTPHeaderField:@"User-Agent"];
     [self.manager1.requestSerializer setValue:@"https://kyfw.12306.cn/otn/login/init" forHTTPHeaderField:@"Referer"];

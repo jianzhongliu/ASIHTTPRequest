@@ -10,8 +10,9 @@
 #import "TYAPIProxy.h"
 #import "UIImageView+AFNetworking.h"
 #import "TYRequestGenerator.h"
+#import "CTTrain12306VerificationCodeView.h"
 
-@interface Login12306ViewController ()<NSXMLParserDelegate>
+@interface Login12306ViewController ()<NSXMLParserDelegate,CTTrain12306VerificationCodeViewDelegate>
 
 @property (nonatomic, strong) UIImageView *image;
 @property (nonatomic, copy) NSString *rangCode;
@@ -19,7 +20,7 @@
 @property (nonatomic, copy) NSString *randUrl;//init服务请求，包含了一个请求js文件的randUrl，这个是获取js的url的一部分
 @property (nonatomic, copy) NSString *randKey;//js中解析出来的一个key
 @property (nonatomic, copy) NSString *randValue;//js中解析出来的一个Value
-
+@property (nonatomic, strong) CTTrain12306VerificationCodeView *viewCode;
 
 @end
 
@@ -52,11 +53,17 @@
     [backButton addTarget:self action:@selector(goBackToRoot) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     
-    self.image = [[UIImageView alloc] initWithFrame:CGRectMake(10, 100, 80, 40)];
+    self.image = [[UIImageView alloc] initWithFrame:CGRectMake(10, 100, 293, 190)];
     [self.view addSubview:self.image];
     
     [self connectToServer];
 
+    UIButton *buttonLogin = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonLogin.frame = CGRectMake(0, self.view.frame.size.height - 40, 320, 40);
+    [buttonLogin setTitle:@"Login" forState:UIControlStateNormal];
+    [buttonLogin setBackgroundColor:[UIColor greenColor]];
+    [buttonLogin addTarget:self action:@selector(didLogin) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:buttonLogin];
 }
 /**
  退出登陆
@@ -118,14 +125,20 @@
     //AFJSONResponseSerializer返回json
     self.manager1.responseSerializer = [AFCompoundResponseSerializer serializer];
 //    [manager1.requestSerializer setValue:@"image/jpeg;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];//会自动加上
-//    [manager1.requestSerializer setValue:@"https://kyfw.12306.cn/otn/login/init" forHTTPHeaderField:@"Referer"];
-    [self.manager1 GET:@"https://kyfw.12306.cn/otn/passcodeNew/getPassCodeNew.do?module=login&rand=sjrand" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.manager1.requestSerializer setValue:@"https://kyfw.12306.cn/otn/login/init" forHTTPHeaderField:@"Referer"];
+    [self.manager1 GET:@"https://kyfw.12306.cn/otn/passcodeNew/getPassCodeNew?module=login&rand=sjrand" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         NSData *data = [NSData dataWithData:responseObject];
         NSString *dataString = [data base64EncodedString];//用这个string去请求ctrip的自动打码服务
         if (dataString.length > 0) {
-            [self autoCodeWithBase64String:dataString];
+//            [self autoCodeWithBase64String:dataString];
             self.image.image = [self base64StringToImage:dataString];
+            self.viewCode = [[CTTrain12306VerificationCodeView alloc] initWithCodeImageSize:self.image.image withOrigin:CGPointMake(0, 200) andYStart:30];
+            self.viewCode.delegate = self;
+//            self.viewCode.frame = CGRectMake(0, 200, 320, self.image.image.size.height);
+            self.image.frame = CGRectZero;
+            [self.view addSubview:self.viewCode];
+
         } else {
             [self loginOut];
         }
@@ -133,37 +146,40 @@
         NSLog(@"Error: %@", error);
     }];
 }
+- (void)didLogin {
+    [self checkCodeValidateWithCode:[self.viewCode fetchTapString]];
+}
 
 //自动打码
-- (void)autoCodeWithBase64String:(NSString *) base64String {
-    AFHTTPRequestOperationManager *manager2 = [AFHTTPRequestOperationManager manager];
-    manager2.securityPolicy.allowInvalidCertificates = YES;
-    manager2.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager2.responseSerializer = [AFJSONResponseSerializer serializer];
-    
-    //    [manager1.requestSerializer setValue:@"image/jpeg;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
-    //    [manager1.requestSerializer setValue:@"https://kyfw.12306.cn/otn/login/init" forHTTPHeaderField:@"Referer"];
-    NSString *token = [[[@"@K0aY5,e" stringByAppendingString:base64String] MD5String] uppercaseString];
-    NSDictionary *dicParam = @{@"channel":@"tieyou.ios", @"token":token, @"base64Code":base64String};
-        [manager2 POST:@"http://m.ctrip.com/restapi/soa2/10103/json/GetCheckCodeFromCtrip" parameters:dicParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        if ([responseObject isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *dic = (NSDictionary *)responseObject;
-            NSString *code = [dic objectForKey:@"CheckCode"];
-            self.rangCode = code;
-            if (code.length > 0) {
-                [self checkCodeValidateWithCode:code];
-            } else {
-                [self connectToServer];
-            }
-            
-        } else {
-            [self connectToServer];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
-}
+//- (void)autoCodeWithBase64String:(NSString *) base64String {
+//    AFHTTPRequestOperationManager *manager2 = [AFHTTPRequestOperationManager manager];
+//    manager2.securityPolicy.allowInvalidCertificates = YES;
+//    manager2.requestSerializer = [AFJSONRequestSerializer serializer];
+//    manager2.responseSerializer = [AFJSONResponseSerializer serializer];
+//    
+//    //    [manager1.requestSerializer setValue:@"image/jpeg;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+//    //    [manager1.requestSerializer setValue:@"https://kyfw.12306.cn/otn/login/init" forHTTPHeaderField:@"Referer"];
+//    NSString *token = [[[@"@K0aY5,e" stringByAppendingString:base64String] MD5String] uppercaseString];
+//    NSDictionary *dicParam = @{@"channel":@"tieyou.ios", @"token":token, @"base64Code":base64String};
+//        [manager2 POST:@"http://m.ctrip.com/restapi/soa2/10103/json/GetCheckCodeFromCtrip" parameters:dicParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSLog(@"JSON: %@", responseObject);
+//        if ([responseObject isKindOfClass:[NSDictionary class]]) {
+//            NSDictionary *dic = (NSDictionary *)responseObject;
+//            NSString *code = [dic objectForKey:@"CheckCode"];
+//            self.rangCode = code;
+//            if (code.length > 0) {
+//                [self checkCodeValidateWithCode:code];
+//            } else {
+//                [self connectToServer];
+//            }
+//            
+//        } else {
+//            [self connectToServer];
+//        }
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"Error: %@", error);
+//    }];
+//}
 
 //验证验证码正确与否
 - (void)checkCodeValidateWithCode:(NSString *) code {
@@ -174,8 +190,7 @@
     NSArray* cookieArr = [self getArrayFromCookie];
     NSString *stringCookie = @"";
     stringCookie = [NSString stringWithFormat:@"JSESSIONID=%@; BIGipServerotn=%@; current_captcha_type=%@", [[cookieArr objectAtIndex:2] objectForKey:@"value"],[[cookieArr objectAtIndex:0] objectForKey:@"value"],[[cookieArr objectAtIndex:1] objectForKey:@"value"]];
-    NSDictionary
-*dicParam = @{@"rand":@"sjrand", @"randCode":code, @"randCode_validate":@""};
+    NSDictionary *dicParam = @{@"rand":@"sjrand",@"randCode":code};
 //    [self.manager1.requestSerializer setValue:stringCookie forHTTPHeaderField:@"Cookie"];
     [self.manager1.requestSerializer setValue:@"https://kyfw.12306.cn/otn/login/init" forHTTPHeaderField:@"Referer"];
     [self.manager1 POST:@"https://kyfw.12306.cn/otn/passcodeNew/checkRandCodeAnsyn" parameters:dicParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -213,11 +228,11 @@
         NSString *shabi =  [[NSString alloc] initWithData:doubi encoding:NSUTF8StringEncoding];
 #warning TODO 得到登录时的随机参数
         if (shabi.length > 0) {
-            NSArray *tempKeyArray = [shabi componentsSeparatedByString:@"key='"];
+            NSArray *tempKeyArray = [shabi componentsSeparatedByString:@"function gc(){var"];
             self.randKey = [[[tempKeyArray objectAtIndex:1] componentsSeparatedByString:@"'"] objectAtIndex:0];
             
-            NSArray *tempValueArray = [shabi componentsSeparatedByString:@"key='"];
-            self.randValue = [[[tempValueArray objectAtIndex:1] componentsSeparatedByString:@"'"] objectAtIndex:0];
+            NSArray *tempValueArray = [shabi componentsSeparatedByString:@"function gc(){var"];
+            self.randValue = [[[tempValueArray objectAtIndex:1] componentsSeparatedByString:@"'"] objectAtIndex:1];
             
             [self getJSValueWithJSKey:self.randValue];
         } else {
@@ -350,6 +365,10 @@
         }
     }
     return mutarr;
+}
+
+- (void)codeViewRefreshImage:(CTTrain12306VerificationCodeView *)codeView {
+//刷新码
 }
 
 @end

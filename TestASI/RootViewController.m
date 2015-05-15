@@ -88,7 +88,7 @@
     [self.view addSubview:robTicket];
     
     [self.view addSubview:progessView];
-//    [[SampleRequestManager shareInsatance] forthRequestForRequestQueue];
+    [[SampleRequestManager shareInsatance] forthRequestForRequestQueue];
     // Do any additional setup after loading the view.
 }
 

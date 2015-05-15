@@ -279,13 +279,13 @@
     //    [self.manager1.responseSerializer addAcceptableContentTypes:[NSSet setWithObject:@"text/html"]]
     NSArray* cookieArr = [self getArrayFromCookie];
     NSString *stringCookie = @"";
-    stringCookie = [NSString stringWithFormat:@"JSESSIONID=%@; BIGipServerotn=%@; current_captcha_type=%@", [[cookieArr objectAtIndex:2] objectForKey:@"value"],[[cookieArr objectAtIndex:0] objectForKey:@"value"],[[cookieArr objectAtIndex:1] objectForKey:@"value"]];
+//    stringCookie = [NSString stringWithFormat:@"JSESSIONID=%@; BIGipServerotn=%@; current_captcha_type=%@", [[cookieArr objectAtIndex:2] objectForKey:@"value"],[[cookieArr objectAtIndex:0] objectForKey:@"value"],[[cookieArr objectAtIndex:1] objectForKey:@"value"]];
 //    NSString *requestParam = [NSString stringWithFormat:@"loginUserDTO.user_name=antingniu&userDTO.password=a123456&randCode=%@&randCode_validate=&%@=%@&myversion=undefined",self.rangCode , [key urlEncodedString], [value urlEncodedString]];
 
     NSMutableDictionary *dicParam = [NSMutableDictionary dictionary];
     [dicParam setValue:@"antingniu" forKey:@"loginUserDTO.user_name"];
     [dicParam setValue:@"a123456" forKey:@"userDTO.password"];
-    [dicParam setValue:self.rangCode forKey:@"randCode"];
+    [dicParam setValue:[[self.viewCode fetchTapString] copy] forKey:@"randCode"];
     [dicParam setValue:@"" forKey:@"randCode_validate"];
     [dicParam setValue:value forKey:key];
     [dicParam setValue:@"undefined" forKey:@"myversion"];
@@ -294,9 +294,9 @@
     [self.manager1.requestSerializer setValue:@"XMLHttpRequest" forHTTPHeaderField:@"X-Requested-With"];
     [self.manager1.requestSerializer setValue:@"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36" forHTTPHeaderField:@"User-Agent"];
     [self.manager1.requestSerializer setValue:@"https://kyfw.12306.cn/otn/login/init" forHTTPHeaderField:@"Referer"];
-//    [self.manager1.requestSerializer setValue:@"*/*" forHTTPHeaderField:@"Accept"];
-//    [self.manager1.requestSerializer setValue:@"gzip, deflate" forHTTPHeaderField:@"Accept-Encoding"];
-//    [self.manager1.requestSerializer setValue:@"https://kyfw.12306.cn" forHTTPHeaderField:@"Origin"];
+    [self.manager1.requestSerializer setValue:@"*/*" forHTTPHeaderField:@"Accept"];
+    [self.manager1.requestSerializer setValue:@"gzip, deflate" forHTTPHeaderField:@"Accept-Encoding"];
+    [self.manager1.requestSerializer setValue:@"https://kyfw.12306.cn" forHTTPHeaderField:@"Origin"];
 //    [self.manager1.requestSerializer setValue:@"" forKey:@""];
 //    [self.manager1.requestSerializer setValuesForKeysWithDictionary:dicParam];
     [self.manager1 POST:@"https://kyfw.12306.cn/otn/login/loginAysnSuggest" parameters:dicParam success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -307,11 +307,10 @@
 //        https://kyfw.12306.cn/otn/dynamicJs/lwluywt
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
             NSDictionary *dic = (NSDictionary *)responseObject;
-            NSInteger status = [[dic objectForKey:@"status"] integerValue];
+            NSInteger status = [[[dic objectForKey:@"data"] objectForKey:@"loginCheck"] isEqualToString:@"Y"];
             if (status == 1) {
                 NSLog(@"登录成功");
                 [self queryUserInfo];
-                
             } else {
                 [self connectToServer];
                 //                [self login];
@@ -321,6 +320,7 @@
         NSLog(@"Error: %@", error);
     }];
 }
+
 - (void)queryUserInfo{
     self.manager1 = [AFHTTPRequestOperationManager manager];
     self.manager1.securityPolicy.allowInvalidCertificates = YES;
@@ -369,6 +369,7 @@
 
 - (void)codeViewRefreshImage:(CTTrain12306VerificationCodeView *)codeView {
 //刷新码
+    [self connectToServer];
 }
 
 @end

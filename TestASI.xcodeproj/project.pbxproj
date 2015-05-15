@@ -45,6 +45,13 @@
 		B7E4E5081910954900077D77 /* BrokerResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E4E5031910954900077D77 /* BrokerResponder.m */; };
 		B7E4E5091910954900077D77 /* IMGDowloaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E4E5051910954900077D77 /* IMGDowloaderManager.m */; };
 		B7E4E50A1910954900077D77 /* IMGDownloaderOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E4E5071910954900077D77 /* IMGDownloaderOperation.m */; };
+		FC0F65671B05F72800AB6BCE /* ark_station_20150127.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FC0F65661B05F72800AB6BCE /* ark_station_20150127.sqlite */; };
+		FC0F65731B05FA0C00AB6BCE /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = FC0F656A1B05FA0C00AB6BCE /* FMDatabase.m */; };
+		FC0F65741B05FA0C00AB6BCE /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FC0F656C1B05FA0C00AB6BCE /* FMDatabaseAdditions.m */; };
+		FC0F65751B05FA0C00AB6BCE /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = FC0F656E1B05FA0C00AB6BCE /* FMDatabasePool.m */; };
+		FC0F65761B05FA0C00AB6BCE /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = FC0F65701B05FA0C00AB6BCE /* FMDatabaseQueue.m */; };
+		FC0F65771B05FA0C00AB6BCE /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = FC0F65721B05FA0C00AB6BCE /* FMResultSet.m */; };
+		FC0F657A1B05FA3A00AB6BCE /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FC0F65791B05FA3A00AB6BCE /* DBManager.m */; };
 		FC100AEB1AC530DF00737E3F /* CTTrain12306VerificationCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC100AEA1AC530DF00737E3F /* CTTrain12306VerificationCodeView.m */; };
 		FC100AED1AC5332F00737E3F /* point.png in Resources */ = {isa = PBXBuildFile; fileRef = FC100AEC1AC5332F00737E3F /* point.png */; };
 		FC70AC3D1AA6C68F0013364B /* NSDictionary+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = FC70AC3C1AA6C68F0013364B /* NSDictionary+Ext.m */; };
@@ -156,6 +163,19 @@
 		B7E4E5051910954900077D77 /* IMGDowloaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGDowloaderManager.m; sourceTree = "<group>"; };
 		B7E4E5061910954900077D77 /* IMGDownloaderOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGDownloaderOperation.h; sourceTree = "<group>"; };
 		B7E4E5071910954900077D77 /* IMGDownloaderOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGDownloaderOperation.m; sourceTree = "<group>"; };
+		FC0F65661B05F72800AB6BCE /* ark_station_20150127.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = ark_station_20150127.sqlite; sourceTree = "<group>"; };
+		FC0F65691B05FA0C00AB6BCE /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		FC0F656A1B05FA0C00AB6BCE /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		FC0F656B1B05FA0C00AB6BCE /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		FC0F656C1B05FA0C00AB6BCE /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		FC0F656D1B05FA0C00AB6BCE /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		FC0F656E1B05FA0C00AB6BCE /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		FC0F656F1B05FA0C00AB6BCE /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		FC0F65701B05FA0C00AB6BCE /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		FC0F65711B05FA0C00AB6BCE /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		FC0F65721B05FA0C00AB6BCE /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		FC0F65781B05FA3A00AB6BCE /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
+		FC0F65791B05FA3A00AB6BCE /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
 		FC100AE91AC530DF00737E3F /* CTTrain12306VerificationCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTrain12306VerificationCodeView.h; sourceTree = "<group>"; };
 		FC100AEA1AC530DF00737E3F /* CTTrain12306VerificationCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTTrain12306VerificationCodeView.m; sourceTree = "<group>"; };
 		FC100AEC1AC5332F00737E3F /* point.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = point.png; sourceTree = "<group>"; };
@@ -314,6 +334,8 @@
 		B7351CCE18EA8B0900338155 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FC0F65661B05F72800AB6BCE /* ark_station_20150127.sqlite */,
+				FC0F65681B05FA0C00AB6BCE /* FMDB */,
 				B7351CD618EA8B0900338155 /* AppDelegate.h */,
 				B7351CD718EA8B0900338155 /* AppDelegate.m */,
 				B7351CDC18EA8B0900338155 /* Images.xcassets */,
@@ -441,6 +463,25 @@
 				B765B8D819066D6800413AAB /* NSString+MD5Addition.m */,
 			);
 			name = Category;
+			sourceTree = "<group>";
+		};
+		FC0F65681B05FA0C00AB6BCE /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				FC0F65781B05FA3A00AB6BCE /* DBManager.h */,
+				FC0F65791B05FA3A00AB6BCE /* DBManager.m */,
+				FC0F65691B05FA0C00AB6BCE /* FMDatabase.h */,
+				FC0F656A1B05FA0C00AB6BCE /* FMDatabase.m */,
+				FC0F656B1B05FA0C00AB6BCE /* FMDatabaseAdditions.h */,
+				FC0F656C1B05FA0C00AB6BCE /* FMDatabaseAdditions.m */,
+				FC0F656D1B05FA0C00AB6BCE /* FMDatabasePool.h */,
+				FC0F656E1B05FA0C00AB6BCE /* FMDatabasePool.m */,
+				FC0F656F1B05FA0C00AB6BCE /* FMDatabaseQueue.h */,
+				FC0F65701B05FA0C00AB6BCE /* FMDatabaseQueue.m */,
+				FC0F65711B05FA0C00AB6BCE /* FMResultSet.h */,
+				FC0F65721B05FA0C00AB6BCE /* FMResultSet.m */,
+			);
+			path = FMDB;
 			sourceTree = "<group>";
 		};
 		FC100AE81AC530DA00737E3F /* Views */ = {
@@ -668,6 +709,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC0F65671B05F72800AB6BCE /* ark_station_20150127.sqlite in Resources */,
 				B765B8EA1907AFF400413AAB /* README in Resources */,
 				B7351CD218EA8B0900338155 /* InfoPlist.strings in Resources */,
 				FC100AED1AC5332F00737E3F /* point.png in Resources */,
@@ -691,6 +733,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCBD600A1AA0480F0091FC2A /* UIButton+AFNetworking.m in Sources */,
+				FC0F657A1B05FA3A00AB6BCE /* DBManager.m in Sources */,
 				FCBD60041AA0480F0091FC2A /* AFSecurityPolicy.m in Sources */,
 				B7351D2818EA9C9C00338155 /* RequestManager.m in Sources */,
 				B765B8E819079DB600413AAB /* SampleRequestManager.m in Sources */,
@@ -721,7 +764,9 @@
 				FCBD5FFE1AA0480F0091FC2A /* AFHTTPRequestOperation.m in Sources */,
 				FCBD60021AA0480F0091FC2A /* AFURLSessionManager.m in Sources */,
 				FCBD60091AA0480F0091FC2A /* UIAlertView+AFNetworking.m in Sources */,
+				FC0F65731B05FA0C00AB6BCE /* FMDatabase.m in Sources */,
 				B765B8D919066D6800413AAB /* NSString+MD5Addition.m in Sources */,
+				FC0F65751B05FA0C00AB6BCE /* FMDatabasePool.m in Sources */,
 				FCBD60011AA0480F0091FC2A /* AFHTTPSessionManager.m in Sources */,
 				B7351CD418EA8B0900338155 /* main.m in Sources */,
 				B7351D2318EA904700338155 /* ReachabilityManager.m in Sources */,
@@ -734,6 +779,7 @@
 				FCBD60281AA049980091FC2A /* Login12306ViewController.m in Sources */,
 				24D826711AB2D48400121316 /* QueryTicketViewController.m in Sources */,
 				B7351CDB18EA8B0900338155 /* TestASI.xcdatamodeld in Sources */,
+				FC0F65761B05FA0C00AB6BCE /* FMDatabaseQueue.m in Sources */,
 				B7351D1818EA8B1800338155 /* ASINetworkQueue.m in Sources */,
 				B7351D1318EA8B1800338155 /* ASIDataDecompressor.m in Sources */,
 				FCBD60211AA048180091FC2A /* NSURLRequest+TYAFNetworking.m in Sources */,
@@ -741,7 +787,9 @@
 				FCBD602E1AA1B9FE0091FC2A /* NSData+Ext.m in Sources */,
 				B7351D2018EA8DB100338155 /* RootViewController.m in Sources */,
 				FCBD600E1AA0480F0091FC2A /* UIWebView+AFNetworking.m in Sources */,
+				FC0F65771B05FA0C00AB6BCE /* FMResultSet.m in Sources */,
 				B7351D1918EA8B1800338155 /* Reachability.m in Sources */,
+				FC0F65741B05FA0C00AB6BCE /* FMDatabaseAdditions.m in Sources */,
 				FCBD60081AA0480F0091FC2A /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				FCBD60251AA048180091FC2A /* TYURLResponse.m in Sources */,
 				B7351D1418EA8B1800338155 /* ASIDownloadCache.m in Sources */,

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2422DFA41AB41971007A50D4 /* RobTicketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2422DFA31AB41971007A50D4 /* RobTicketViewController.m */; };
 		2422DFA81AB47A06007A50D4 /* TicketObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2422DFA71AB47A06007A50D4 /* TicketObject.m */; };
+		244DF8841B0649D300A69412 /* StationInfoEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 244DF8831B0649D300A69412 /* StationInfoEntity.m */; };
 		24D826711AB2D48400121316 /* QueryTicketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D826701AB2D48400121316 /* QueryTicketViewController.m */; };
 		B7351CC618EA8B0900338155 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7351CC518EA8B0900338155 /* Foundation.framework */; };
 		B7351CC818EA8B0900338155 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7351CC718EA8B0900338155 /* CoreGraphics.framework */; };
@@ -102,6 +103,8 @@
 		2422DFA31AB41971007A50D4 /* RobTicketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RobTicketViewController.m; sourceTree = "<group>"; };
 		2422DFA61AB47A06007A50D4 /* TicketObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TicketObject.h; sourceTree = "<group>"; };
 		2422DFA71AB47A06007A50D4 /* TicketObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TicketObject.m; sourceTree = "<group>"; };
+		244DF8821B0649D300A69412 /* StationInfoEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StationInfoEntity.h; sourceTree = "<group>"; };
+		244DF8831B0649D300A69412 /* StationInfoEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StationInfoEntity.m; sourceTree = "<group>"; };
 		24D8266F1AB2D48400121316 /* QueryTicketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryTicketViewController.h; sourceTree = "<group>"; };
 		24D826701AB2D48400121316 /* QueryTicketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryTicketViewController.m; sourceTree = "<group>"; };
 		B7351CC218EA8B0900338155 /* TestASI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestASI.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -472,6 +475,8 @@
 		FC0F65681B05FA0C00AB6BCE /* FMDB */ = {
 			isa = PBXGroup;
 			children = (
+				244DF8821B0649D300A69412 /* StationInfoEntity.h */,
+				244DF8831B0649D300A69412 /* StationInfoEntity.m */,
 				FC0F65781B05FA3A00AB6BCE /* DBManager.h */,
 				FC0F65791B05FA3A00AB6BCE /* DBManager.m */,
 				FC0F65691B05FA0C00AB6BCE /* FMDatabase.h */,
@@ -765,6 +770,7 @@
 				FCBD60241AA048180091FC2A /* TYSignatureGenerator.m in Sources */,
 				B7E4E5091910954900077D77 /* IMGDowloaderManager.m in Sources */,
 				2422DFA41AB41971007A50D4 /* RobTicketViewController.m in Sources */,
+				244DF8841B0649D300A69412 /* StationInfoEntity.m in Sources */,
 				FCBD5FFE1AA0480F0091FC2A /* AFHTTPRequestOperation.m in Sources */,
 				FCBD60021AA0480F0091FC2A /* AFURLSessionManager.m in Sources */,
 				FCBD60091AA0480F0091FC2A /* UIAlertView+AFNetworking.m in Sources */,

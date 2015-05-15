@@ -57,21 +57,21 @@
     
     [sql appendString:@"SELECT count(*) as cnt, substr(pinYin,1,1) as grp FROM tbl_stationV3 where (teleCode <> '') "];
     
-    //检测筛选
-    [self adjustSQLFilter:sql filter:filter pams:pams fix:@"AND"];
-    
-    [sql appendString:@"group by substr(pinYin,1,1) order by 2"];
-    FMResultSet *rs = [self.dbInfo executeQuery:sql withArgumentsInArray:pams];
-    
-    
-    //加入数据
-    while ([rs next]) {
-        StationInfoEntity *obj = [[StationInfoEntity alloc]init];
-        obj.name = [rs stringForColumn:@"grp"];
-        obj.count = [rs intForColumn:@"cnt"];
-        [rst addObject:obj];
-    }
-    [rs close];
+//    //检测筛选
+//    [self adjustSQLFilter:sql filter:filter pams:pams fix:@"AND"];
+//    
+//    [sql appendString:@"group by substr(pinYin,1,1) order by 2"];
+//    FMResultSet *rs = [self.dbInfo executeQuery:sql withArgumentsInArray:pams];
+//    
+//    
+//    //加入数据
+//    while ([rs next]) {
+//        StationInfoEntity *obj = [[StationInfoEntity alloc]init];
+//        obj.name = [rs stringForColumn:@"grp"];
+//        obj.count = [rs intForColumn:@"cnt"];
+//        [rst addObject:obj];
+//    }
+//    [rs close];
     
     return rst;
 }
@@ -81,10 +81,10 @@
 {
     if (name.length <= 0) return name;
     
-    NSString *sql = @"SELECT teleCode from tbl_stationV3 WHERE stationName = ? ";
-    NSString *rst = [self.fmdb stringForQuery:sql, name];
-    if (rst.length <= 0) rst = name;
-    return rst;
+//    NSString *sql = @"SELECT teleCode from tbl_stationV3 WHERE stationName = ? ";
+//    NSString *rst = [self.fmdb stringForQuery:sql, name];
+//    if (rst.length <= 0) rst = name;
+    return @"";
 }
 
 

@@ -52,6 +52,7 @@
 		FC0F65761B05FA0C00AB6BCE /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = FC0F65701B05FA0C00AB6BCE /* FMDatabaseQueue.m */; };
 		FC0F65771B05FA0C00AB6BCE /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = FC0F65721B05FA0C00AB6BCE /* FMResultSet.m */; };
 		FC0F657A1B05FA3A00AB6BCE /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FC0F65791B05FA3A00AB6BCE /* DBManager.m */; };
+		FC0F657C1B05FEF000AB6BCE /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FC0F657B1B05FEF000AB6BCE /* libsqlite3.dylib */; };
 		FC100AEB1AC530DF00737E3F /* CTTrain12306VerificationCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC100AEA1AC530DF00737E3F /* CTTrain12306VerificationCodeView.m */; };
 		FC100AED1AC5332F00737E3F /* point.png in Resources */ = {isa = PBXBuildFile; fileRef = FC100AEC1AC5332F00737E3F /* point.png */; };
 		FC70AC3D1AA6C68F0013364B /* NSDictionary+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = FC70AC3C1AA6C68F0013364B /* NSDictionary+Ext.m */; };
@@ -176,6 +177,7 @@
 		FC0F65721B05FA0C00AB6BCE /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		FC0F65781B05FA3A00AB6BCE /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		FC0F65791B05FA3A00AB6BCE /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		FC0F657B1B05FEF000AB6BCE /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		FC100AE91AC530DF00737E3F /* CTTrain12306VerificationCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTTrain12306VerificationCodeView.h; sourceTree = "<group>"; };
 		FC100AEA1AC530DF00737E3F /* CTTrain12306VerificationCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTTrain12306VerificationCodeView.m; sourceTree = "<group>"; };
 		FC100AEC1AC5332F00737E3F /* point.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = point.png; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC0F657C1B05FEF000AB6BCE /* libsqlite3.dylib in Frameworks */,
 				B7351D1C18EA8D7300338155 /* libz.dylib in Frameworks */,
 				B7351CC818EA8B0900338155 /* CoreGraphics.framework in Frameworks */,
 				B7351CCC18EA8B0900338155 /* CoreData.framework in Frameworks */,
@@ -304,6 +307,7 @@
 		B7351CC418EA8B0900338155 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FC0F657B1B05FEF000AB6BCE /* libsqlite3.dylib */,
 				B7351D1B18EA8D7300338155 /* libz.dylib */,
 				B7351CC518EA8B0900338155 /* Foundation.framework */,
 				B7351CC718EA8B0900338155 /* CoreGraphics.framework */,
